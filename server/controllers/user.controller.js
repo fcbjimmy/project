@@ -3,7 +3,8 @@ const Product = require("../models/Product");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../error");
 const { createJWT } = require("../utils/jwt");
-const { comparePassword } = require("../utils/comparePassword");
+const { comparePasswords } = require("../utils/comparePassword");
+const bcrypt = require("bcryptjs");
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
@@ -29,7 +30,7 @@ const login = async (req, res) => {
   if (!user) {
     throw new CustomError.UnauthenticatedError(`No user with email ${email}`);
   }
-  const validPassword = await comparePassword(password, user.password);
+  const validPassword = await comparePasswords(password, user.password);
   if (!validPassword) {
     throw new CustomError.UnauthenticatedError("Password does not match");
   }
@@ -41,4 +42,23 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
   res.send("logout");
 };
-module.exports = { signup, login, logout };
+
+const showCurrentUser = async (req, res) => {
+  const user = await User.findByPk(req.user.userId);
+  if (!user) {
+    throw new CustomError.UnauthenticatedError(
+      "Invalid User, please login again"
+    );
+  }
+  console.log(user);
+  res
+    .status(StatusCodes.OK)
+    .json({ user: { name: user.name, email: user.email } });
+};
+
+const showAllProducts = async (req, res) => {
+  const products = await Product.findAll();
+  res.status(StatusCodes.OK).json({ products });
+};
+
+module.exports = { signup, login, logout, showCurrentUser, showAllProducts };

@@ -15,6 +15,7 @@ require("./models/Product");
 
 //middleware
 const authRouter = require("./routes/userRoute");
+const productRouter = require("./routes/productRoute");
 const notFound = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
   res.send("hello world");
 });
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/product", productRouter);
 
 app.use(notFound);
 app.use(errorHandlerMiddleware);

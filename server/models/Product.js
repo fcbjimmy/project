@@ -21,7 +21,9 @@ const Product = sequelize.define(
     phone: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      max: 8,
+      validate: {
+        min: 8,
+      },
     },
     website: {
       type: DataTypes.STRING,
