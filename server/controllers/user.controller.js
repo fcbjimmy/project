@@ -8,20 +8,28 @@ const bcrypt = require("bcryptjs");
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
+
   const validEmail = await User.findOne({ where: { email } });
   if (validEmail) {
     throw new CustomError.BadRequestError("Please use another email");
   }
+
   const salt = await bcrypt.genSalt(10);
-  const user = await User.create({
-    name,
-    email,
-    password: await bcrypt.hash(password, salt),
-  });
+
+  let data = { name, email, password: await bcrypt.hash(password, salt) };
+
+  const count = await User.count();
+  if (count === 0) {
+    data = { ...data, role: "admin" };
+  }
+
+  const user = await User.create(data);
+
   const token = createJWT(user);
+
   res
     .status(StatusCodes.CREATED)
-    .json({ user: { name: user.name, email }, token });
+    .json({ user: { name: user.name, email, role: user.role }, token });
 };
 
 const login = async (req, res) => {
@@ -53,7 +61,7 @@ const showCurrentUser = async (req, res) => {
   console.log(user);
   res
     .status(StatusCodes.OK)
-    .json({ user: { name: user.name, email: user.email } });
+    .json({ user: { name: user.name, email: user.email, role: user.role } });
 };
 
 const showAllProducts = async (req, res) => {

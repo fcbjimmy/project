@@ -28,7 +28,7 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 
 //routes
 app.use(express.json());
-app.use(fileUpload({ useTempFiles: true }));
+app.use(fileUpload({ useTempFiles: false }));
 app.use(cors());
 app.get("/", (req, res) => {
   res.send("hello world");
@@ -45,7 +45,7 @@ const port = process.env.PORT || 4000;
 //initialize server
 const start = async () => {
   try {
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: true });
     console.log("Connection has been established successfully.");
     app.listen(port, console.log(`server is listening on port ${port}`));
   } catch (error) {
