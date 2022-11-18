@@ -1,6 +1,7 @@
 const Product = require("../models/Product");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../error");
+const User = require("../models/User");
 
 const createProduct = async (req, res) => {
   const {
@@ -106,6 +107,11 @@ const updateProduct = async (req, res) => {
   if (!product) {
     throw new CustomError.BadRequestError("Not found");
   }
+
+  if (product.userId !== req.user.userId) {
+    throw new CustomError.UnauthenticatedError("No access");
+  }
+
   product.name = name;
   product.address = address;
   product.phone = phone;
@@ -135,10 +141,31 @@ const deleteProduct = async (req, res) => {
   res.status(StatusCodes.ACCEPTED).json({ msg: "Product deleted" });
 };
 
+const adminDeleteProduct = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findByPk(req.user.userId);
+  if (user.role !== "admin") {
+    throw new CustomError.BadRequestError("No access");
+  }
+
+  const product = await Product.findOne({
+    where: { id },
+  });
+  if (!product) {
+    throw new CustomError.BadRequestError("Not found");
+  }
+
+  await Product.destroy({
+    where: { id },
+  });
+  res.status(StatusCodes.ACCEPTED).json({ msg: "Product deleted" });
+};
+
 module.exports = {
   createProduct,
   getAllProductsFromUser,
   getSingleProduct,
   updateProduct,
   deleteProduct,
+  adminDeleteProduct,
 };
