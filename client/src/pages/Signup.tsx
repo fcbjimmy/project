@@ -3,23 +3,24 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../models/signup";
 import React, { useEffect, useState } from "react";
 import { string } from "yup/lib/locale";
+import { SignupFormInputs } from "../helpers/data.types";
 
-interface FormInputs {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+// interface FormInputs {
+//   name: string;
+//   email: string;
+//   password: string;
+//   confirmPassword: string;
+// }
 
-const Signup = (): JSX.Element => {
+const Signup = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm<FormInputs>({ resolver: yupResolver(schema) });
+  } = useForm<SignupFormInputs>({ resolver: yupResolver(schema) });
 
-  const onSubmitHandler = (data: FormInputs) => {
+  const onSubmitHandler = (data: SignupFormInputs) => {
     console.log(data);
   };
 
