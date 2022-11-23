@@ -2,15 +2,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../models/signup";
 import React, { useEffect, useState } from "react";
-import { string } from "yup/lib/locale";
 import { SignupFormInputs } from "../helpers/data.types";
-
-// interface FormInputs {
-//   name: string;
-//   email: string;
-//   password: string;
-//   confirmPassword: string;
-// }
+import useAuthContext from "../hooks/useAuthContext";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
   const {
@@ -19,9 +13,10 @@ const Signup = () => {
     handleSubmit,
     reset,
   } = useForm<SignupFormInputs>({ resolver: yupResolver(schema) });
+  const { dispatch, login, signup, logout } = useAuthContext();
 
   const onSubmitHandler = (data: SignupFormInputs) => {
-    console.log(data);
+    signup(data);
   };
 
   return (
@@ -71,6 +66,11 @@ const Signup = () => {
           </li>
           <li>
             <button type="submit">Sign up</button>
+          </li>
+          <li>
+            <p>
+              Already a member? <Link to="/login">Log in</Link>
+            </p>
           </li>
         </ul>
       </form>

@@ -44,9 +44,10 @@ const login = async (req, res) => {
   }
 
   const token = createJWT(user);
-  res
-    .status(StatusCodes.OK)
-    .json({ user: { name: user.name, email, role: user.role }, token });
+  res.status(StatusCodes.OK).json({
+    user: { name: user.name, email, role: user.role, id: user.id },
+    token,
+  });
 };
 
 const logout = async (req, res) => {
@@ -61,9 +62,14 @@ const showCurrentUser = async (req, res) => {
     );
   }
   console.log(user);
-  res
-    .status(StatusCodes.OK)
-    .json({ user: { name: user.name, email: user.email, role: user.role } });
+  res.status(StatusCodes.OK).json({
+    user: {
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      id: user.id,
+    },
+  });
 };
 
 const showAllProducts = async (req, res) => {

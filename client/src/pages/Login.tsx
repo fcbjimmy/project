@@ -2,8 +2,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../models/login";
 import React, { useEffect, useState } from "react";
-import { string } from "yup/lib/locale";
 import { LoginFormInputs } from "../helpers/data.types";
+import useAuthContext from "../hooks/useAuthContext";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const {
@@ -13,8 +14,11 @@ const Login = () => {
     reset,
   } = useForm<LoginFormInputs>({ resolver: yupResolver(schema) });
 
+  const contextValue = useAuthContext();
+  const { login } = contextValue;
+
   const onSubmitHandler = (data: LoginFormInputs) => {
-    console.log(data);
+    login(data);
   };
 
   return (
@@ -47,6 +51,11 @@ const Login = () => {
             <button className="border-2 border-sky-500" type="submit">
               Login
             </button>
+          </li>
+          <li>
+            <p>
+              Not a member? <Link to="/signup">Sign up</Link>
+            </p>
           </li>
         </ul>
       </form>

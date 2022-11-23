@@ -1,13 +1,24 @@
 import "./App.css";
-import { Signup, Login } from "./pages/index";
+import { Main, Signup, Login } from "./pages/index";
+import { Navigate, useLocation, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import useAuthContext from "./hooks/useAuthContext";
 
 function App() {
+  const { user } = useAuthContext();
   return (
-    <div className="App">
-      <div className="bg-red-600 text-blue-300">hello</div>
-      {/* <Signup /> */}
-      <Login />
-    </div>
+    <>
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={<Main />}></Route>
+        <Route
+          path="/signup"
+          element={user ? <Navigate to="/" /> : <Signup />}
+        />
+        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+      </Routes>
+    </>
   );
 }
 
