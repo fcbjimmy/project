@@ -17,8 +17,8 @@ export const authReducer: ReducerType = (state, action) => {
               role: action.payload.role,
               id: action.payload.id,
             }
-          : action.payload,
-        token: action.payload?.token,
+          : null,
+        token: action.payload ? action.payload.token : null,
         isLoading: false,
       };
 
@@ -37,6 +37,13 @@ export const productReducer: productReducerType = (state, action) => {
   switch (action.type) {
     case "SETUP_PRODUCT_BEGIN":
       return { ...state, isLoading: true };
+    case "GET_PRODUCTS":
+      return {
+        ...state,
+        allProducts: action.payload ? action.payload : [],
+      };
+    case "SETUP_PRODUCT_LOADING_FALSE":
+      return { ...state, isLoading: false };
     default:
       return state;
   }

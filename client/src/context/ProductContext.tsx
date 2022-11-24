@@ -1,7 +1,11 @@
 import { createContext, useReducer, ReactNode, useMemo } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { productStateTypes, productAction } from "../helpers/data.types";
+import {
+  productStateTypes,
+  productAction,
+  products,
+} from "../helpers/data.types";
 import { productReducer } from "./reducer";
 
 interface Props {
@@ -14,6 +18,7 @@ const token = localStorage.getItem("token");
 const initialState: productStateTypes = {
   allProducts: [],
   userProducts: [],
+  isLoading: false,
 };
 
 export const productsContext = createContext<{
@@ -58,7 +63,13 @@ export const ProductContextProvider = ({ children }: Props) => {
 
   const userProducts = async () => {
     try {
-      const { data } = await productFetch.get("product/showProducts");
+      dispatch({ type: "SETUP_PRODUCT_BEGIN" });
+      const { data } = await productFetch.get("auth/showAllProducts");
+      const { products }: { products: products[] } = data;
+      dispatch({ type: "GET_PRODUCTS", payload: products });
+
+      dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
+      console.log(data, "HELLO");
     } catch (error) {
       console.log(error);
     }

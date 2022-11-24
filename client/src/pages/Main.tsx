@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import useAuthContext from "../hooks/useAuthContext";
+import { AllShops } from "../components";
 
 const Main = () => {
   const { user, logout } = useAuthContext();
-  console.log(user);
+
   return (
     <div>
       Main Page
@@ -17,7 +18,6 @@ const Main = () => {
         </>
       ) : (
         <>
-          {" "}
           <div>
             <Link to="/login">Login here</Link>
           </div>
@@ -26,6 +26,7 @@ const Main = () => {
           </div>
         </>
       )}
+      <AllShops />
     </div>
   );
 };

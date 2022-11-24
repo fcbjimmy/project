@@ -6,5 +6,6 @@ export const useProductContext = () => {
   if (!contextProductValue) {
     throw Error("useProductContext must be used inside an AuthContextProvider");
   }
-  return contextProductValue;
+  const { state, dispatch, userProducts } = contextProductValue;
+  return { ...state, dispatch, userProducts };
 };

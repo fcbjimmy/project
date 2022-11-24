@@ -9,3 +9,5 @@ https://stackoverflow.com/questions/69863687/how-to-set-default-header-in-axios-
 https://stackoverflow.com/questions/69636830/error-using-axios-interceptors-and-responses
 
 https://stackoverflow.com/questions/73798552/property-response-does-not-exist-on-type-error-in-try-and-catch-block-typesc
+
+https://stackoverflow.com/questions/71592960/how-to-fetch-with-method-get-and-type-script

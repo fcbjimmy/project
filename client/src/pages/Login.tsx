@@ -14,8 +14,7 @@ const Login = () => {
     reset,
   } = useForm<LoginFormInputs>({ resolver: yupResolver(schema) });
 
-  const contextValue = useAuthContext();
-  const { login } = contextValue;
+  const { login } = useAuthContext();
 
   const onSubmitHandler = (data: LoginFormInputs) => {
     login(data);

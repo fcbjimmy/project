@@ -44,9 +44,9 @@ export interface userTypes {
 }
 
 export interface stateTypes {
-  user?: userTypes | null;
-  isLoading?: true | false;
-  token?: string | null;
+  user: userTypes | null;
+  isLoading: true | false;
+  token: string | null;
 }
 
 // reducer
@@ -99,9 +99,28 @@ export type ReducerType = (state: stateTypes, action: appAction) => stateTypes;
 
 //productreducer
 
+export type products = {
+  id: number;
+  name: string;
+  address: string;
+  phone: number;
+  website: string;
+  email: string;
+  description: string;
+  type: string;
+  logo: string;
+  cover: string;
+  sampleImageOne: string;
+  sampleImageTwo: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: number;
+};
+
 export interface productStateTypes {
-  allProducts: productTypes[] | [];
-  userProducts: productTypes[] | [];
+  allProducts: products[] | [];
+  userProducts: products[] | [];
+  isLoading: true | false;
 }
 
 export interface productAction {
@@ -111,8 +130,9 @@ export interface productAction {
     | "SETUP_EDIT_BEGIN"
     | "SETUP_DELETE_BEGIN"
     | "GET_PRODUCTS"
-    | "CREATE_PRODUCTS";
-  payload?: authPayload;
+    | "CREATE_PRODUCTS"
+    | "SETUP_PRODUCT_LOADING_FALSE";
+  payload?: products[];
 }
 
 export type productReducerType = (
