@@ -39,8 +39,14 @@ const Product = sequelize.define(
       allowNull: false,
     },
     type: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.ENUM(
+        "Restaurant",
+        "Shopping",
+        "Health and Beauty",
+        "Grocery",
+        "other"
+      ),
+      defaultValue: "other",
     },
     logo: {
       type: DataTypes.STRING,
