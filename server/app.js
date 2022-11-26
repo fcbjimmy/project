@@ -28,7 +28,7 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 
 //routes
 app.use(express.json());
-app.use(fileUpload({ useTempFiles: false }));
+app.use(fileUpload({ useTempFiles: true }));
 app.use(cors());
 app.get("/", (req, res) => {
   res.send("hello world");

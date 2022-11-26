@@ -6,6 +6,8 @@ const fs = require("fs");
 
 const uploadProductImage = async (req, res) => {
   // console.log(req.files.image);
+  // return res.status(StatusCodes.OK).json({ image: { src: "ok" } });
+
   if (!req.files) {
     throw new CustomError.BadRequestError("No File Uploaded");
   }
@@ -23,6 +25,7 @@ const uploadProductImage = async (req, res) => {
     req.files.image.tempFilePath,
     { use_filename: true, folder: "file-upload-zero" }
   );
+
   fs.unlinkSync(req.files.image.tempFilePath);
   return res.status(StatusCodes.OK).json({ image: { src: result.secure_url } });
 };

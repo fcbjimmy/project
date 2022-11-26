@@ -47,7 +47,7 @@ const createProduct = async (req, res) => {
     cover,
     userId: req.user.userId,
   });
-  res.status(StatusCodes.OK).json({ msg: "Project created" });
+  res.status(StatusCodes.OK).json(product, { msg: "Project created" });
 };
 
 const getAllProductsFromUser = async (req, res) => {
