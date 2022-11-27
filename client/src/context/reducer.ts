@@ -40,14 +40,20 @@ export const productReducer: productReducerType = (state, action) => {
     case "GET_PRODUCTS":
       return {
         ...state,
-        allProducts: action.payload ? action.payload : [],
+        allProducts: action.payload,
         isLoading: false,
       };
     case "GET_USER_PRODUCTS":
       return {
         ...state,
-        userProducts: action.payload ? action.payload : [],
+        userProducts: action.payload,
         isLoading: false,
+      };
+    case "CREATE_PRODUCTS":
+      return {
+        ...state,
+        isLoading: false,
+        userProducts: [action.payload, ...state.userProducts],
       };
     case "SETUP_PRODUCT_LOADING_FALSE":
       return { ...state, isLoading: false };

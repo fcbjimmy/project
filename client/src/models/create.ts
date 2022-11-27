@@ -23,5 +23,4 @@ export const schema = yup.object().shape({
     .max(32)
     .required(),
   type: yup.string().required(),
-  logo: yup.mixed().required("File is required"),
 });

@@ -12,6 +12,11 @@ import {
   productAction,
   products,
   CreateProductInputs,
+  setupbegin,
+  getallpkts,
+  createuserpkts,
+  setuploadingfalse,
+  getuserpkts,
 } from "../helpers/data.types";
 import { productReducer } from "./reducer";
 import useAuthContext from "../hooks/useAuthContext";
@@ -32,7 +37,9 @@ const initialState: productStateTypes = {
 
 export const productsContext = createContext<{
   state: productStateTypes;
-  dispatch: React.Dispatch<productAction>;
+  dispatch: React.Dispatch<
+    setupbegin | getallpkts | createuserpkts | setuploadingfalse | getuserpkts
+  >;
   fetchAllProducts: () => void;
   fetchUserProducts: () => void;
   createProduct: (data: CreateProductInputs) => void;
@@ -82,9 +89,8 @@ export const ProductContextProvider = ({ children }: Props) => {
     try {
       dispatch({ type: "SETUP_PRODUCT_BEGIN" });
       const { data } = await productFetch.get("auth/showAllProducts");
-      const { products }: { products: products[] } = data;
+      const { products }: { products: products[] | [] } = data;
       dispatch({ type: "GET_PRODUCTS", payload: products });
-      console.log(data, "HELLO");
     } catch (error) {
       dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
       console.log(error);
@@ -94,7 +100,7 @@ export const ProductContextProvider = ({ children }: Props) => {
   const fetchUserProducts = async () => {
     try {
       dispatch({ type: "SETUP_PRODUCT_BEGIN" });
-      const { data }: { data: products[] } = await productFetch.get(
+      const { data }: { data: products[] | [] } = await productFetch.get(
         "product/showProducts"
       );
       dispatch({ type: "GET_USER_PRODUCTS", payload: data });
@@ -106,6 +112,7 @@ export const ProductContextProvider = ({ children }: Props) => {
 
   const createProduct = async (data: CreateProductInputs) => {
     try {
+      dispatch({ type: "SETUP_PRODUCT_BEGIN" });
       const {
         name,
         address,
@@ -117,21 +124,26 @@ export const ProductContextProvider = ({ children }: Props) => {
         logo,
         cover,
       } = data;
-      const response = await productFetch.post("product/createProduct", {
-        name,
-        address,
-        phone,
-        website,
-        email,
-        description,
-        type,
-        logo,
-        cover,
-      });
+      const {
+        data: productData,
+      }: { data: { products: products; msg: string } } =
+        await productFetch.post("product/createProduct", {
+          name,
+          address,
+          phone,
+          website,
+          email,
+          description,
+          type,
+          logo,
+          cover,
+        });
 
-      console.log(response);
+      const { products } = productData;
+
+      dispatch({ type: "CREATE_PRODUCTS", payload: products });
     } catch (error) {
-      // dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
+      dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
       console.log(error);
       if (error instanceof AxiosError) {
         toast.error(`${error?.response?.data}`, { position: "top-center" });

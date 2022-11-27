@@ -24,7 +24,8 @@ export interface CreateProductInputs {
   type: string;
   website: string;
   cover: string | ArrayBuffer | null;
-  logo: { [key: string]: File } | string;
+  logo: string | ArrayBuffer | null;
+  // logo: { [key: string]: File } | string;
 }
 
 //auth context
@@ -144,12 +145,42 @@ export interface productAction {
     | "SETUP_EDIT_BEGIN"
     | "SETUP_DELETE_BEGIN"
     | "GET_PRODUCTS"
-    | "CREATE_PRODUCTS"
+    // | "CREATE_PRODUCTS"
     | "SETUP_PRODUCT_LOADING_FALSE";
-  payload?: products[];
+  payload?: products[] | products | [];
 }
+
+//test
+
+export type setupbegin = {
+  type: "SETUP_PRODUCT_BEGIN";
+};
+
+export type createuserpkts = {
+  type: "CREATE_PRODUCTS";
+  payload: products;
+};
+
+export type getallpkts = {
+  type: "GET_PRODUCTS";
+  payload: products[] | [];
+};
+
+export type setuploadingfalse = {
+  type: "SETUP_PRODUCT_LOADING_FALSE";
+};
+
+export type getuserpkts = {
+  type: "GET_USER_PRODUCTS";
+  payload: products[] | [];
+};
 
 export type productReducerType = (
   state: productStateTypes,
-  action: productAction
+  action:
+    | setupbegin
+    | getallpkts
+    | createuserpkts
+    | setuploadingfalse
+    | getuserpkts
 ) => productStateTypes;

@@ -25,9 +25,9 @@ const CreateProducts = () => {
     reset,
   } = useForm<CreateProductInputs>({ resolver: yupResolver(schema) });
   // const [file, setFile] = useState<fileImage | null>(null);
-  const [preview, setPreview] = useState<string | ArrayBuffer | null>("");
+  // const [preview, setPreview] = useState<string | ArrayBuffer | null>("");
   const [cover, setCover] = useState<string | ArrayBuffer | null>(null);
-  // const [logo, setLogo] = useState<string | ArrayBuffer | null>(null);
+  const [logo, setLogo] = useState<string | ArrayBuffer | null>(null);
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     let file;
@@ -41,6 +41,18 @@ const CreateProducts = () => {
     setFileToBase64(file);
   };
 
+  const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let file;
+    if (e.target.files !== null) {
+      file = e.target.files[0];
+    }
+    // if (file !== undefined) {
+    //   const filePreview = URL.createObjectURL(file);
+    //   setPreview(filePreview);
+    // }
+    setFileToBase64Logo(file);
+  };
+
   const setFileToBase64 = (file: File | undefined) => {
     const reader = new FileReader();
     if (file !== undefined) reader.readAsDataURL(file);
@@ -49,9 +61,16 @@ const CreateProducts = () => {
     };
   };
 
+  const setFileToBase64Logo = (file: File | undefined) => {
+    const reader = new FileReader();
+    if (file !== undefined) reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setLogo(reader.result);
+    };
+  };
+
   const onSubmitHandler = (data: CreateProductInputs) => {
-    const { address, description, email, name, phone, type, website, logo } =
-      data;
+    const { address, description, email, name, phone, type, website } = data;
     const formData = {
       address,
       description,
@@ -156,16 +175,15 @@ const CreateProducts = () => {
               </select>
             </li>
             <li>
-              <p>{errors.logo?.message}</p>
               <div>
-                <label htmlFor="fileupload">Select Image for Logo..</label>
+                <label htmlFor="fileUploadLogo">Select Image for Logo..</label>
               </div>
               <input
-                accept="image/*"
+                accept="image/png, image/jpeg"
                 type="file"
-                id="fileupload"
-                // onChange={handleImage}
-                {...register("logo")}
+                id="fileUploadLogo"
+                onChange={handleLogo}
+                required
               />
               <div>
                 <button>upload</button>
@@ -176,14 +194,12 @@ const CreateProducts = () => {
                 <label htmlFor="fileupload">Select Image for Cover..</label>
               </div>
               <input
-                accept="image/*"
+                accept="image/png, image/jpeg"
                 type="file"
                 id="fileupload"
                 onChange={handleImage}
+                required
               />
-              <div>
-                <button>upload</button>
-              </div>
             </li>
             <li>
               <button className="border-2 border-sky-500" type="submit">

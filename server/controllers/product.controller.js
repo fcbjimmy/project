@@ -40,28 +40,29 @@ const createProduct = async (req, res) => {
     folder: "file-upload-zero",
   });
 
-  // const resultLogo = await cloudinary.uploader.upload(logo, {
-  //   use_filename: true,
-  //   folder: "file-upload-zero",
-  // });
+  const resultLogo = await cloudinary.uploader.upload(logo, {
+    use_filename: true,
+    folder: "file-upload-zero",
+  });
 
   console.log(resultCover);
+  console.log(resultLogo);
 
-  // const product = await Product.create({
-  //   name,
-  //   address,
-  //   phone,
-  //   website,
-  //   email,
-  //   description,
-  //   type,
-  //   logo: resultLogo,
-  //   cover: resultCover,
-  //   userId: req.user.userId,
-  // });
+  const product = await Product.create({
+    name,
+    address,
+    phone,
+    website,
+    email,
+    description,
+    type,
+    logo: resultLogo.secure_url,
+    cover: resultCover.secure_url,
+    userId: req.user.userId,
+  });
 
-  // console.log(product);
-  // res.status(StatusCodes.OK).json({ product, msg: "Project created" });
+  console.log(product);
+  res.status(StatusCodes.OK).json({ product, msg: "Project created" });
 };
 
 const getAllProductsFromUser = async (req, res) => {
