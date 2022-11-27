@@ -20,7 +20,6 @@ const createProduct = async (req, res) => {
     !name ||
     !address ||
     !phone ||
-    !website ||
     !email ||
     !description ||
     !type ||
@@ -47,7 +46,8 @@ const createProduct = async (req, res) => {
     cover,
     userId: req.user.userId,
   });
-  res.status(StatusCodes.OK).json(product, { msg: "Project created" });
+  console.log(product);
+  res.status(StatusCodes.OK).json({ product, msg: "Project created" });
 };
 
 const getAllProductsFromUser = async (req, res) => {
@@ -87,7 +87,6 @@ const updateProduct = async (req, res) => {
     name === "" ||
     address === "" ||
     phone === "" ||
-    website === "" ||
     email === "" ||
     description === "" ||
     type === "" ||
@@ -95,11 +94,6 @@ const updateProduct = async (req, res) => {
     cover === ""
   ) {
     throw new CustomError.BadRequestError("Required fields cannot be empty");
-  }
-
-  const validName = await Product.findOne({ where: { name } });
-  if (validName) {
-    throw new CustomError.BadRequestError("Name has already been used");
   }
 
   const product = await Product.findByPk(id);
