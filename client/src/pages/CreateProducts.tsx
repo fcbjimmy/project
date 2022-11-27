@@ -25,29 +25,28 @@ const CreateProducts = () => {
     reset,
   } = useForm<CreateProductInputs>({ resolver: yupResolver(schema) });
   // const [file, setFile] = useState<fileImage | null>(null);
-  // const [preview, setPreview] = useState("");
+  const [preview, setPreview] = useState<string | ArrayBuffer | null>("");
   const [cover, setCover] = useState<string | ArrayBuffer | null>(null);
   // const [logo, setLogo] = useState<string | ArrayBuffer | null>(null);
-
-  //handle and convert file to base64
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     let file;
     if (e.target.files !== null) {
       file = e.target.files[0];
     }
-    console.log(file);
+    // if (file !== undefined) {
+    //   const filePreview = URL.createObjectURL(file);
+    //   setPreview(filePreview);
+    // }
     setFileToBase64(file);
   };
 
   const setFileToBase64 = (file: File | undefined) => {
     const reader = new FileReader();
     if (file !== undefined) reader.readAsDataURL(file);
-    const result = (reader.onloadend = () => reader.result);
-    // setCover(reader.result);
-    // console.log(reader.result);
-    console.log(result);
-    setCover(result);
+    reader.onloadend = () => {
+      setCover(reader.result);
+    };
   };
 
   const onSubmitHandler = (data: CreateProductInputs) => {
@@ -79,7 +78,11 @@ const CreateProducts = () => {
   return (
     <>
       <section className="border-2">
-        {/* {file && <img src={preview} alt={file.name} />} */}
+        {/* {preview && typeof preview !== ArrayBuffer ? (
+          <img src={preview} alt="hello" />
+        ) : (
+          ""
+        )} */}
         <form onSubmit={handleSubmit(onSubmitHandler)}>
           <h1>Create Product</h1>
           <ul>
