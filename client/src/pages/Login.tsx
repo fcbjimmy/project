@@ -17,6 +17,7 @@ const Login = () => {
   const { login } = useAuthContext();
 
   const onSubmitHandler = (data: LoginFormInputs) => {
+    console.log(data);
     login(data);
   };
 
@@ -24,7 +25,6 @@ const Login = () => {
     <section className="border-2">
       <form onSubmit={handleSubmit(onSubmitHandler)}>
         <h1>Login</h1>
-
         <ul>
           <li>
             <p>{errors.email?.message}</p>

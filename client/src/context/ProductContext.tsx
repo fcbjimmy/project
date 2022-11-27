@@ -1,18 +1,27 @@
-import { createContext, useReducer, ReactNode, useMemo } from "react";
+import {
+  createContext,
+  useReducer,
+  ReactNode,
+  useMemo,
+  useEffect,
+} from "react";
 import { toast } from "react-toastify";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
   productStateTypes,
   productAction,
   products,
+  CreateProductInputs,
 } from "../helpers/data.types";
 import { productReducer } from "./reducer";
+import useAuthContext from "../hooks/useAuthContext";
 
 interface Props {
   children: ReactNode;
 }
 
-const token = localStorage.getItem("token");
+//USE TOKEN FROM STATE ❗❗❗❗❗❗❗
+// const token = localStorage.getItem("token");
 // const user = localStorage.getItem("user");
 
 const initialState: productStateTypes = {
@@ -24,15 +33,23 @@ const initialState: productStateTypes = {
 export const productsContext = createContext<{
   state: productStateTypes;
   dispatch: React.Dispatch<productAction>;
-  userProducts: () => void;
+  fetchAllProducts: () => void;
+  fetchUserProducts: () => void;
+  createProduct: (data: CreateProductInputs) => void;
 }>({
   state: initialState,
   dispatch: () => {},
-  userProducts: () => {},
+  fetchAllProducts: () => {},
+  fetchUserProducts: () => {},
+  createProduct: () => {},
 });
 
 export const ProductContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
+
+  const { user, token } = useAuthContext();
+
+  useEffect(() => {}, [user, token]);
 
   const productFetch = axios.create({
     baseURL: "/api/v1",
@@ -61,22 +78,75 @@ export const ProductContextProvider = ({ children }: Props) => {
     }
   );
 
-  const userProducts = async () => {
+  const fetchAllProducts = async () => {
     try {
       dispatch({ type: "SETUP_PRODUCT_BEGIN" });
       const { data } = await productFetch.get("auth/showAllProducts");
       const { products }: { products: products[] } = data;
       dispatch({ type: "GET_PRODUCTS", payload: products });
-
-      dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
       console.log(data, "HELLO");
     } catch (error) {
+      dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
       console.log(error);
     }
   };
 
+  const fetchUserProducts = async () => {
+    try {
+      dispatch({ type: "SETUP_PRODUCT_BEGIN" });
+      const { data }: { data: products[] } = await productFetch.get(
+        "product/showProducts"
+      );
+      dispatch({ type: "GET_USER_PRODUCTS", payload: data });
+    } catch (error) {
+      dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
+      console.log(error);
+    }
+  };
+
+  const createProduct = async (data: CreateProductInputs) => {
+    try {
+      const {
+        name,
+        address,
+        phone,
+        website,
+        email,
+        description,
+        type,
+        logo,
+        cover,
+      } = data;
+      const response = await productFetch.post("product/createProduct", {
+        name,
+        address,
+        phone,
+        website,
+        email,
+        description,
+        type,
+        logo,
+        cover,
+      });
+
+      console.log(response);
+    } catch (error) {
+      // dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
+      console.log(error);
+      if (error instanceof AxiosError) {
+        toast.error(`${error?.response?.data}`, { position: "top-center" });
+      }
+    }
+  };
+
   const contextValue = useMemo(
-    () => ({ state, dispatch, userProducts }),
+    () => ({
+      state,
+      dispatch,
+      fetchAllProducts,
+      fetchUserProducts,
+      createProduct,
+    }),
     [state, dispatch]
   );
 

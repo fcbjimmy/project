@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import useAuthContext from "../hooks/useAuthContext";
-import { AllShops } from "../components";
+import { AllProducts, CurrentUserProducts } from "../components";
 
 const Main = () => {
   const { user, logout } = useAuthContext();
@@ -15,6 +15,12 @@ const Main = () => {
           <button onClick={logout} className="bg-white border-2 text-blue-300">
             logout
           </button>
+          <p>
+            <Link to={"/userProducts"}>User products</Link>
+          </p>
+          <p>
+            <Link to={"/create"}>Create products</Link>
+          </p>
         </>
       ) : (
         <>
@@ -26,7 +32,7 @@ const Main = () => {
           </div>
         </>
       )}
-      <AllShops />
+      {/* <AllProducts /> */}
     </div>
   );
 };

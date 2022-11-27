@@ -9,6 +9,7 @@ const app = express();
 const cors = require("cors");
 const sequelize = require("./db/database");
 const fileUpload = require("express-fileupload");
+const bodyParser = require("body-parser");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -27,6 +28,7 @@ const notFound = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
 //routes
+app.use(bodyParser.json({ limit: "500kb" }));
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
 app.use(cors());
@@ -35,7 +37,6 @@ app.get("/", (req, res) => {
 });
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/product", productRouter);
-
 app.use(notFound);
 app.use(errorHandlerMiddleware);
 

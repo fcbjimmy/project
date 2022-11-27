@@ -41,6 +41,13 @@ export const productReducer: productReducerType = (state, action) => {
       return {
         ...state,
         allProducts: action.payload ? action.payload : [],
+        isLoading: false,
+      };
+    case "GET_USER_PRODUCTS":
+      return {
+        ...state,
+        userProducts: action.payload ? action.payload : [],
+        isLoading: false,
       };
     case "SETUP_PRODUCT_LOADING_FALSE":
       return { ...state, isLoading: false };

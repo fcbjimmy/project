@@ -2,6 +2,7 @@ const Product = require("../models/Product");
 const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../error");
 const User = require("../models/User");
+const cloudinary = require("cloudinary").v2;
 
 const createProduct = async (req, res) => {
   const {
@@ -22,9 +23,9 @@ const createProduct = async (req, res) => {
     !phone ||
     !email ||
     !description ||
-    !type ||
-    !logo ||
-    !cover
+    !type
+    // !logo ||
+    // !cover
   ) {
     throw new CustomError.BadRequestError("Please provide all values");
   }
@@ -34,20 +35,33 @@ const createProduct = async (req, res) => {
     throw new CustomError.BadRequestError("Name has already been used");
   }
 
-  const product = await Product.create({
-    name,
-    address,
-    phone,
-    website,
-    email,
-    description,
-    type,
-    logo,
-    cover,
-    userId: req.user.userId,
+  const resultCover = await cloudinary.uploader.upload(cover, {
+    use_filename: true,
+    folder: "file-upload-zero",
   });
-  console.log(product);
-  res.status(StatusCodes.OK).json({ product, msg: "Project created" });
+
+  // const resultLogo = await cloudinary.uploader.upload(logo, {
+  //   use_filename: true,
+  //   folder: "file-upload-zero",
+  // });
+
+  console.log(resultCover);
+
+  // const product = await Product.create({
+  //   name,
+  //   address,
+  //   phone,
+  //   website,
+  //   email,
+  //   description,
+  //   type,
+  //   logo: resultLogo,
+  //   cover: resultCover,
+  //   userId: req.user.userId,
+  // });
+
+  // console.log(product);
+  // res.status(StatusCodes.OK).json({ product, msg: "Project created" });
 };
 
 const getAllProductsFromUser = async (req, res) => {

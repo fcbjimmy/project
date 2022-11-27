@@ -11,3 +11,8 @@ https://stackoverflow.com/questions/69636830/error-using-axios-interceptors-and-
 https://stackoverflow.com/questions/73798552/property-response-does-not-exist-on-type-error-in-try-and-catch-block-typesc
 
 https://stackoverflow.com/questions/71592960/how-to-fetch-with-method-get-and-type-script
+
+https://forum.vuejs.org/t/how-to-access-event-target-files-in-typescript-for-an-input-type-file-form-element/122001
+
+after solving file upload now axios payload is too large cannot upload two image
+https://www.appsloveworld.com/reactjs/100/23/axios-post-request-413-payload-too-large

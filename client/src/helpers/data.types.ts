@@ -14,6 +14,19 @@ export interface LoginFormInputs {
   password: string;
 }
 
+// create product form
+export interface CreateProductInputs {
+  address: string;
+  description: string;
+  email: string;
+  name: string;
+  phone: number;
+  type: string;
+  website: string;
+  cover: string | ArrayBuffer | null;
+  logo: { [key: string]: File } | string;
+}
+
 //auth context
 
 export interface setLocaleStorage {
@@ -126,6 +139,7 @@ export interface productStateTypes {
 export interface productAction {
   type:
     | "SETUP_PRODUCT_BEGIN"
+    | "GET_USER_PRODUCTS"
     | "SETUP_PRODUCT_ERROR"
     | "SETUP_EDIT_BEGIN"
     | "SETUP_DELETE_BEGIN"

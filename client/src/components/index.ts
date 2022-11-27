@@ -1,3 +1,4 @@
-import AllShops from "./AllShops";
+import AllProducts from "./AllProducts";
+import CurrentUserProducts from "./CurrentUserProducts";
 
-export { AllShops };
+export { AllProducts, CurrentUserProducts };

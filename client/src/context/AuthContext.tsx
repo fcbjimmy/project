@@ -120,6 +120,9 @@ export const AuthContextProvider = ({ children }: Props) => {
       toast.success("Logged in", { position: "top-center" });
     } catch (error) {
       console.log(error);
+      if (error instanceof AxiosError) {
+        toast.error(`${error?.response?.data}`, { position: "top-center" });
+      }
     }
   };
 
