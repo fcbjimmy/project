@@ -27,9 +27,10 @@ const signup = async (req, res) => {
 
   const token = createJWT(user);
 
-  res
-    .status(StatusCodes.CREATED)
-    .json({ user: { name: user.name, email, role: user.role }, token });
+  res.status(StatusCodes.CREATED).json({
+    user: { name: user.name, email, role: user.role, id: user.id },
+    token,
+  });
 };
 
 const login = async (req, res) => {

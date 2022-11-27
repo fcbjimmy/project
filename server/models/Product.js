@@ -28,6 +28,7 @@ const Product = sequelize.define(
     website: {
       type: DataTypes.STRING,
       allowNull: false,
+      defaultValue: "",
     },
     email: {
       type: DataTypes.STRING,
