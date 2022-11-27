@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import axios, { AxiosError } from "axios";
 import {
   productStateTypes,
-  productAction,
   products,
   CreateProductInputs,
   setupbegin,
@@ -139,9 +138,10 @@ export const ProductContextProvider = ({ children }: Props) => {
           cover,
         });
 
-      const { products } = productData;
+      const { products: productCreated, msg } = productData;
 
-      dispatch({ type: "CREATE_PRODUCTS", payload: products });
+      dispatch({ type: "CREATE_PRODUCTS", payload: productCreated });
+      toast.success(`${msg}`, { position: "top-center" });
     } catch (error) {
       dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
       console.log(error);

@@ -137,18 +137,18 @@ export interface productStateTypes {
   isLoading: true | false;
 }
 
-export interface productAction {
-  type:
-    | "SETUP_PRODUCT_BEGIN"
-    | "GET_USER_PRODUCTS"
-    | "SETUP_PRODUCT_ERROR"
-    | "SETUP_EDIT_BEGIN"
-    | "SETUP_DELETE_BEGIN"
-    | "GET_PRODUCTS"
-    // | "CREATE_PRODUCTS"
-    | "SETUP_PRODUCT_LOADING_FALSE";
-  payload?: products[] | products | [];
-}
+// export interface productAction {
+//   type:
+//     | "SETUP_PRODUCT_BEGIN"
+//     | "GET_USER_PRODUCTS"
+//     | "SETUP_PRODUCT_ERROR"
+//     | "SETUP_EDIT_BEGIN"
+//     | "SETUP_DELETE_BEGIN"
+//     | "GET_PRODUCTS"
+//     // | "CREATE_PRODUCTS"
+//     | "SETUP_PRODUCT_LOADING_FALSE";
+//   payload?: products[] | products | [];
+// }
 
 //test
 
