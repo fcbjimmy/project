@@ -1,4 +1,3 @@
-import "./App.css";
 import { Main, Signup, Login, CreateProducts } from "./pages/index";
 import { CurrentUserProducts } from "./components";
 import { Navigate, useLocation, Routes, Route } from "react-router-dom";

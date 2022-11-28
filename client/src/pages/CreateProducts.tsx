@@ -7,14 +7,14 @@ import useAuthContext from "../hooks/useAuthContext";
 import useProductContext from "../hooks/useProductContext";
 import { Link } from "react-router-dom";
 
-interface fileImage {
-  lastModified: number;
-  lastModifiedDate?: {};
-  name: string;
-  size: number;
-  type: string;
-  webkitRelativePath: string;
-}
+// interface fileImage {
+//   lastModified: number;
+//   lastModifiedDate?: {};
+//   name: string;
+//   size: number;
+//   type: string;
+//   webkitRelativePath: string;
+// }
 
 const CreateProducts = () => {
   const { createProduct } = useProductContext();
@@ -83,6 +83,7 @@ const CreateProducts = () => {
       logo,
     };
     createProduct(formData);
+    reset();
   };
 
   // const handleChange = (e: any) => {

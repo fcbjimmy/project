@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import useAuthContext from "../hooks/useAuthContext";
-import { AllProducts, CurrentUserProducts } from "../components";
+import { AllProducts, CurrentUserProducts, ProductCard } from "../components";
 
 const Main = () => {
   const { user, logout } = useAuthContext();
 
   return (
-    <div>
+    <div className="">
       Main Page
       <div className="bg-red-600 text-blue-300">hello</div>
       {user ? (
@@ -32,7 +32,9 @@ const Main = () => {
           </div>
         </>
       )}
-      {/* <AllProducts /> */}
+      <section className="flex flex-col justify-center items-center">
+        <ProductCard />
+      </section>
     </div>
   );
 };
