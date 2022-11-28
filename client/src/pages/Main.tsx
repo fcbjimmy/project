@@ -33,7 +33,7 @@ const Main = () => {
         </>
       )}
       <section className="flex flex-col justify-center items-center">
-        <ProductCard />
+        <AllProducts />
       </section>
     </div>
   );

@@ -15,6 +15,7 @@ const createProduct = async (req, res) => {
     type,
     logo,
     cover,
+    location,
   } = req.body;
 
   if (
@@ -23,7 +24,8 @@ const createProduct = async (req, res) => {
     !phone ||
     !email ||
     !description ||
-    !type
+    !type ||
+    !location
     // !logo ||
     // !cover
   ) {
@@ -56,6 +58,7 @@ const createProduct = async (req, res) => {
     email,
     description,
     type,
+    location,
     logo: resultLogo.secure_url,
     cover: resultCover.secure_url,
     userId: req.user.userId,
@@ -96,6 +99,7 @@ const updateProduct = async (req, res) => {
     type,
     logo,
     cover,
+    location,
   } = req.body;
 
   if (
@@ -105,6 +109,7 @@ const updateProduct = async (req, res) => {
     email === "" ||
     description === "" ||
     type === "" ||
+    location == "" ||
     logo === "" ||
     cover === ""
   ) {
@@ -123,6 +128,7 @@ const updateProduct = async (req, res) => {
 
   product.name = name;
   product.address = address;
+  product.location = location;
   product.phone = phone;
   product.website = website;
   product.email = email;

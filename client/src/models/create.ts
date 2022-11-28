@@ -7,6 +7,7 @@ export const schema = yup.object().shape({
     .max(32)
     .required(),
   address: yup.string().max(90).required("Address is required!"),
+  location: yup.string().required("Location is required!"),
   phone: yup
     .string()
     .min(8, "min 8 digits")

@@ -6,6 +6,7 @@ import { CreateProductInputs } from "../helpers/data.types";
 import useAuthContext from "../hooks/useAuthContext";
 import useProductContext from "../hooks/useProductContext";
 import { Link } from "react-router-dom";
+import { locations, types } from "../helpers/options";
 
 // interface fileImage {
 //   lastModified: number;
@@ -70,7 +71,16 @@ const CreateProducts = () => {
   };
 
   const onSubmitHandler = (data: CreateProductInputs) => {
-    const { address, description, email, name, phone, type, website } = data;
+    const {
+      address,
+      description,
+      email,
+      name,
+      phone,
+      type,
+      website,
+      location,
+    } = data;
     const formData = {
       address,
       description,
@@ -81,6 +91,7 @@ const CreateProducts = () => {
       website,
       cover,
       logo,
+      location,
     };
     createProduct(formData);
     reset();
@@ -167,12 +178,50 @@ const CreateProducts = () => {
               />
             </li>
             <li>
-              <select {...register("type")}>
-                <option value="Restaurant">Restaurant</option>
-                <option value="Shopping">Shopping</option>
-                <option value="Health and Beauty">Health and Beauty</option>
-                <option value="Grocery">Grocery</option>
-                <option value="other">other</option>
+              <div>
+                <label htmlFor="type">Choose Type</label>
+              </div>
+              <select id="type" {...register("type")}>
+                {types.map((type, index) => {
+                  return (
+                    <option key={index} value={type}>
+                      {type}
+                    </option>
+                  );
+                })}
+              </select>
+            </li>
+            <li>
+              <div>
+                <label htmlFor="location">Choose Location</label>
+              </div>
+              <select id="location" {...register("location")}>
+                {locations.map((location, index) => {
+                  if (location === "--Kowloon--") {
+                    return (
+                      <option disabled key={index} value={location}>
+                        {location}
+                      </option>
+                    );
+                  } else if (location === "--Hong Kong Island--") {
+                    return (
+                      <option disabled key={index} value={location}>
+                        {location}
+                      </option>
+                    );
+                  } else if (location === "--New Territories--") {
+                    return (
+                      <option disabled key={index} value={location}>
+                        {location}
+                      </option>
+                    );
+                  }
+                  return (
+                    <option key={index} value={location}>
+                      {location}
+                    </option>
+                  );
+                })}
               </select>
             </li>
             <li>

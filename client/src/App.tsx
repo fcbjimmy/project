@@ -1,4 +1,10 @@
-import { Main, Signup, Login, CreateProducts } from "./pages/index";
+import {
+  Main,
+  Signup,
+  Login,
+  CreateProducts,
+  ProductPage,
+} from "./pages/index";
 import { CurrentUserProducts } from "./components";
 import { Navigate, useLocation, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -11,7 +17,7 @@ function App() {
     <>
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<Main />}></Route>
+        <Route path="/" element={<Main />} />
         <Route
           path="/signup"
           element={user ? <Navigate to="/" /> : <Signup />}
@@ -25,6 +31,7 @@ function App() {
           path="/userProducts"
           element={user ? <CurrentUserProducts /> : <Navigate to="/" />}
         />
+        <Route path="/product/:id" element={<ProductPage />} />
       </Routes>
     </>
   );

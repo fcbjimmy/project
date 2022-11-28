@@ -17,6 +17,7 @@ export interface LoginFormInputs {
 // create product form
 export interface CreateProductInputs {
   address: string;
+  location: string;
   description: string;
   email: string;
   name: string;
@@ -39,6 +40,7 @@ export interface productTypes {
   id: number;
   name: string;
   address: string;
+  location: string;
   phone: number;
   website: string;
   email: string;
@@ -117,6 +119,7 @@ export type products = {
   id: number;
   name: string;
   address: string;
+  location: string;
   phone: number;
   website: string;
   email: string;

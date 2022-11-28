@@ -122,6 +122,7 @@ export const ProductContextProvider = ({ children }: Props) => {
         type,
         logo,
         cover,
+        location,
       } = data;
       const {
         data: productData,
@@ -136,6 +137,7 @@ export const ProductContextProvider = ({ children }: Props) => {
           type,
           logo,
           cover,
+          location,
         });
 
       const { products: productCreated, msg } = productData;

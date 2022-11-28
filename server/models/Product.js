@@ -57,6 +57,10 @@ const Product = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     sampleImageOne: {
       type: DataTypes.STRING,
       defaultValue:
