@@ -24,4 +24,6 @@ export const schema = yup.object().shape({
     .max(32)
     .required(),
   type: yup.string().required(),
+  instagram: yup.string().required(),
+  facebook: yup.string().required(),
 });

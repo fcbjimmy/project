@@ -61,6 +61,14 @@ const Product = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    instagram: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    facebook: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     sampleImageOne: {
       type: DataTypes.STRING,
       defaultValue:

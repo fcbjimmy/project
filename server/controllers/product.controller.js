@@ -16,6 +16,8 @@ const createProduct = async (req, res) => {
     logo,
     cover,
     location,
+    instagram,
+    facebook,
   } = req.body;
 
   if (
@@ -25,7 +27,9 @@ const createProduct = async (req, res) => {
     !email ||
     !description ||
     !type ||
-    !location
+    !location ||
+    !instagram ||
+    !facebook
     // !logo ||
     // !cover
   ) {
@@ -59,6 +63,8 @@ const createProduct = async (req, res) => {
     description,
     type,
     location,
+    instagram,
+    facebook,
     logo: resultLogo.secure_url,
     cover: resultCover.secure_url,
     userId: req.user.userId,
@@ -100,6 +106,8 @@ const updateProduct = async (req, res) => {
     logo,
     cover,
     location,
+    instagram,
+    facebook,
   } = req.body;
 
   if (
@@ -111,7 +119,9 @@ const updateProduct = async (req, res) => {
     type === "" ||
     location == "" ||
     logo === "" ||
-    cover === ""
+    cover === "" ||
+    instagram === "" ||
+    facebook === ""
   ) {
     throw new CustomError.BadRequestError("Required fields cannot be empty");
   }
@@ -136,6 +146,8 @@ const updateProduct = async (req, res) => {
   product.type = type;
   product.logo = logo;
   product.cover = cover;
+  product.instagram = instagram;
+  product.facebook = facebook;
   await product.save();
   res.status(StatusCodes.OK).json(product);
 };

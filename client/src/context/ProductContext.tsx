@@ -123,6 +123,8 @@ export const ProductContextProvider = ({ children }: Props) => {
         logo,
         cover,
         location,
+        instagram,
+        facebook,
       } = data;
       const {
         data: productData,
@@ -138,6 +140,8 @@ export const ProductContextProvider = ({ children }: Props) => {
           logo,
           cover,
           location,
+          instagram,
+          facebook,
         });
 
       const { products: productCreated, msg } = productData;

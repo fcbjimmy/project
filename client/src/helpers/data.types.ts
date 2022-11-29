@@ -26,6 +26,8 @@ export interface CreateProductInputs {
   website: string;
   cover: string | ArrayBuffer | null;
   logo: string | ArrayBuffer | null;
+  instagram: string;
+  facebook: string;
   // logo: { [key: string]: File } | string;
 }
 
@@ -50,6 +52,8 @@ export interface productTypes {
   cover: string;
   sampleImageOne: string;
   sampleImageTwo: string;
+  instagram: string;
+  facebook: string;
 }
 
 export interface userTypes {
@@ -132,6 +136,8 @@ export type products = {
   createdAt: string;
   updatedAt: string;
   userId: number;
+  instagram: string;
+  facebook: string;
 };
 
 export interface productStateTypes {

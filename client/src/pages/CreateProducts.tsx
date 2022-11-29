@@ -80,6 +80,8 @@ const CreateProducts = () => {
       type,
       website,
       location,
+      instagram,
+      facebook,
     } = data;
     const formData = {
       address,
@@ -92,6 +94,8 @@ const CreateProducts = () => {
       cover,
       logo,
       location,
+      instagram,
+      facebook,
     };
     createProduct(formData);
     reset();
@@ -175,6 +179,26 @@ const CreateProducts = () => {
                 type="text"
                 id="website"
                 placeholder="Website"
+              />
+            </li>
+            <li>
+              <p>{errors.instagram?.message}</p>
+              <label htmlFor="instagram">Instagram</label>
+              <input
+                {...register("instagram")}
+                type="text"
+                id="instagram"
+                placeholder="Instagram"
+              />
+            </li>
+            <li>
+              <p>{errors.facebook?.message}</p>
+              <label htmlFor="facebook">Facebook</label>
+              <input
+                {...register("facebook")}
+                type="text"
+                id="facebook"
+                placeholder="Facebook"
               />
             </li>
             <li>
