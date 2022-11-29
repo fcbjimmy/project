@@ -142,7 +142,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         },
       });
       setUserToLocalStorage({ token, user });
-      toast.success("User created", { position: "top-center" });
+      toast.success(`Welcome ${user.name}`, { position: "top-center" });
     } catch (error: unknown) {
       console.log(error);
       if (error instanceof AxiosError) {

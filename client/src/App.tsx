@@ -4,8 +4,9 @@ import {
   Login,
   CreateProducts,
   ProductPage,
+  About,
 } from "./pages/index";
-import { CurrentUserProducts } from "./components";
+import { CurrentUserProducts, Navbar } from "./components";
 import { Navigate, useLocation, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,6 +17,7 @@ function App() {
   return (
     <>
       <ToastContainer />
+      <Navbar />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route
@@ -32,6 +34,7 @@ function App() {
           element={user ? <CurrentUserProducts /> : <Navigate to="/" />}
         />
         <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </>
   );
