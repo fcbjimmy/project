@@ -6,7 +6,7 @@ const Main = () => {
   const { user, logout } = useAuthContext();
 
   return (
-    <div className="">
+    <div>
       Main Page
       <div className="bg-red-600 text-blue-300">hello</div>
       {user ? (

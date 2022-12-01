@@ -15,7 +15,7 @@ import useAuthContext from "./hooks/useAuthContext";
 function App() {
   const { user } = useAuthContext();
   return (
-    <>
+    <div className="bg-slate-100 w-full min-h-screen">
       <ToastContainer />
       <Navbar />
       <Routes>
@@ -36,7 +36,7 @@ function App() {
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/about" element={<About />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

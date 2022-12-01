@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { LoginFormInputs } from "../helpers/data.types";
 import useAuthContext from "../hooks/useAuthContext";
 import { Link } from "react-router-dom";
+import { CgProfile } from "react-icons/cg";
 
 const Login = () => {
   const {
@@ -22,42 +23,61 @@ const Login = () => {
   };
 
   return (
-    <section className="border-2">
-      <form onSubmit={handleSubmit(onSubmitHandler)}>
-        <h1>Login</h1>
-        <ul>
-          <li>
-            <p>{errors.email?.message}</p>
-            <label htmlFor="email">Email</label>
-            <input
-              {...register("email")}
-              type="email"
-              id="email"
-              placeholder="email"
-            />
-          </li>
-          <li>
-            <p>{errors.password?.message}</p>
-            <label htmlFor="password">Password</label>
-            <input
-              {...register("password")}
-              type="password"
-              id="password"
-              placeholder="password"
-            />
-          </li>
-          <li>
-            <button className="border-2 border-sky-500" type="submit">
-              Login
-            </button>
-          </li>
-          <li>
-            <p>
-              Not a member? <Link to="/signup">Sign up</Link>
-            </p>
-          </li>
-        </ul>
-      </form>
+    <section>
+      <div className="container-form">
+        <div>
+          <CgProfile className="form-react-icon" />
+        </div>
+        <div className="container-form-inputs">
+          <form
+            className="flex flex-col h-full"
+            onSubmit={handleSubmit(onSubmitHandler)}
+          >
+            <h1 className="form-h1">Sign in into your account</h1>
+            <ul>
+              <li className="flex flex-col">
+                <p className="form-error">{errors.email?.message}</p>
+                <label className="hidden" htmlFor="email">
+                  Email
+                </label>
+                <input
+                  className="reg-form-input"
+                  {...register("email")}
+                  type="email"
+                  id="email"
+                  placeholder="Email address"
+                />
+              </li>
+              <li className="flex flex-col">
+                <p className="form-error">{errors.password?.message}</p>
+                <label className="hidden" htmlFor="password">
+                  Password
+                </label>
+                <input
+                  className="reg-form-input"
+                  {...register("password")}
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                />
+              </li>
+              <li className="flex flex-col">
+                <button className="reg-form-button" type="submit">
+                  Sign in
+                </button>
+              </li>
+              <li>
+                <p>
+                  Not a member?{" "}
+                  <Link to="/signup">
+                    <span className="text-emerald-500">Sign up 🙌</span>
+                  </Link>
+                </p>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
     </section>
   );
 };

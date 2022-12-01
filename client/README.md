@@ -19,3 +19,7 @@ https://www.appsloveworld.com/reactjs/100/23/axios-post-request-413-payload-too-
 
 fileReader.result does not seem to return a base64 string... you might need to do some conversion there.
 https://stackoverflow.com/questions/58473477/angular-filereader-onloadend-return-result
+
+// whatsapp phone
+// Email of the shop (to be displayed)
+// Instagram (pls provide link)

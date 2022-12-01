@@ -3,14 +3,31 @@
 @tailwind utilities;
 
 /* @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap"); */
-@import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Mulish&display=swap");
 
 @layer base {
   button {
-    @apply bg-emerald-300 text-white border-2 rounded-md border-emerald-400 p-1 hover:bg-transparent hover:text-emerald-300 mx-2 active:translate-y-0.5 transition duration-150;
+    @apply bg-emerald-500 text-white border-2 text-sm rounded-md border-emerald-500 p-2 hover:bg-transparent hover:text-emerald-300 active:translate-y-0.5 transition duration-150;
   }
 }
 
 .icon-text {
   @apply flex gap-2 items-center my-2;
+}
+
+.form-error {
+  @apply text-sm text-red-400;
+}
+
+.form-li-create {
+  @apply flex flex-col px-4 py-2;
+}
+
+.form-li-create-input {
+  @apply border rounded max-w-sm p-2;
+}
+
+.menu-li {
+  @apply border-b-2 border-b-emerald-200 py-1 text-center hover:scale-110 duration-100 hover:border-none;
 }

@@ -7,7 +7,7 @@ module.exports = {
         "3xl": "0px 5px 15px rgba(0, 0, 0, 0.35)",
       },
       fontFamily: {
-        sans: ["Merriweather", "sans-serif"],
+        sans: ["Mulish", "sans-serif"],
       },
       width: {
         100: "30rem",

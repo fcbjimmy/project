@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* below */
+
+.container-form {
+  @apply w-screen min-h-[80vh] flex flex-col justify-center items-center;
+}
+
+.container-form-inputs {
+  @apply w-[370px] md:w-[450px] h-[50vh];
+}
+
+.form-react-icon {
+  @apply text-4xl text-emerald-500;
+}
+
+.form-h1 {
+  @apply text-center my-5;
+}
+
+.reg-form-input {
+  @apply border rounded max-w-lg p-2 text-sm;
+}
+
+.reg-form-button {
+  @apply border-2 bg-emerald-500 max-w-xl my-5;
+}

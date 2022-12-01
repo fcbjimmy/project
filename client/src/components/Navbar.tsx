@@ -25,9 +25,9 @@ const Navbar = (props: Props) => {
       <nav className="w-screen h-[80px] z-10 fixed bg-green-50 drop-shadow-lg">
         <div className="px-2 flex justify-between items-center w-full h-full">
           <div className="flex items-center">
-            <Link to={"/"}>
-              <h1 className="text-3xl font-bold mr-4 sm:text-4xl">
-                HK S-Shops
+            <Link to={"/"} onClick={() => setNav(false)}>
+              <h1 className="text-emerald-600 text-2xl font-bold mr-4 sm:text-4xl">
+                SBHK
               </h1>
             </Link>
             <ul className="hidden md:flex">
@@ -45,19 +45,23 @@ const Navbar = (props: Props) => {
           {!user ? (
             <div className="hidden md:flex pr-4">
               <button
-                className="bg-transparent text-black hover:text-black border-none"
+                className="bg-transparent text-black hover:text-black border-none mx-2"
                 onClick={() => navigate("/login")}
               >
                 Log in
               </button>
-              <button className="px-2 py-3" onClick={() => navigate("/signup")}>
+              <button
+                className="px-2 py-3 mx-2"
+                onClick={() => navigate("/signup")}
+              >
                 Sign up
               </button>
             </div>
           ) : (
             <div className="hidden md:flex pr-4">
-              {" "}
-              <button onClick={logout}>Logout</button>
+              <button className="p-2" onClick={logout}>
+                Logout
+              </button>
             </div>
           )}
           <div className="pr-4 text-2xl md:hidden" onClick={handleClick}>
@@ -70,13 +74,39 @@ const Navbar = (props: Props) => {
         </div>
 
         <ul className={!nav ? "hidden" : "absolute bg-green-50 w-full px-8"}>
-          <li className="border-b-2 border-b-emerald-200">Home</li>
-          <li className="border-b-2 border-b-emerald-200">About</li>
-          <li className="border-b-2 border-b-emerald-200">Shops</li>
-          <li className="border-b-2 border-b-emerald-200">My Shops</li>
+          <Link to={"/"} onClick={() => setNav(!nav)}>
+            <li className="menu-li">Home</li>
+          </Link>
+          <Link to={"/about"} onClick={() => setNav(!nav)}>
+            <li className="menu-li">
+              <span className="">About</span>
+            </li>
+          </Link>
+          <li className="menu-li">Shops</li>
+          {user && (
+            <Link to={"/userProducts"} onClick={() => setNav(!nav)}>
+              <li className="menu-li">My Shops</li>
+            </Link>
+          )}
           <div className="flex flex-col my-4 gap-4">
-            <button className="bg-transparent text-emerald-300 ">Log in</button>
-            <button className="mb-4">Sign up</button>
+            <button
+              className="bg-transparent text-emerald-300"
+              onClick={() => {
+                navigate("/login");
+                setNav(!nav);
+              }}
+            >
+              Sign in
+            </button>
+            <button
+              className="mb-4"
+              onClick={() => {
+                navigate("/signup");
+                setNav(!nav);
+              }}
+            >
+              Sign up
+            </button>
           </div>
         </ul>
       </nav>

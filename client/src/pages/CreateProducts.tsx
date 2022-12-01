@@ -7,6 +7,7 @@ import useAuthContext from "../hooks/useAuthContext";
 import useProductContext from "../hooks/useProductContext";
 import { Link } from "react-router-dom";
 import { locations, types } from "../helpers/options";
+import { SampleProduct } from "../components";
 
 // interface fileImage {
 //   lastModified: number;
@@ -24,16 +25,41 @@ const CreateProducts = () => {
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm<CreateProductInputs>({ resolver: yupResolver(schema) });
+    watch,
+  } = useForm<CreateProductInputs>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: "",
+      type: "",
+      location: "",
+    },
+  });
   // const [file, setFile] = useState<fileImage | null>(null);
-  // const [preview, setPreview] = useState<string | ArrayBuffer | null>("");
+  const [preview, setPreview] = useState<string>(
+    "https://res.cloudinary.com/dp5axfdaj/image/upload/v1668699843/cld-sample-5.jpg"
+  );
   const [cover, setCover] = useState<string | ArrayBuffer | null>(null);
   const [logo, setLogo] = useState<string | ArrayBuffer | null>(null);
 
+  // const sampleName = watch("name");
+  // const sampleType = watch("type");
+  // const sampleLocation = watch("location");
+  // console.log(sampleName);
+  // console.log(sampleType);
+  // console.log(sampleLocation);
+
+  const data = watch(["name", "type", "location"]);
+
+  console.log(data);
+  console.log(preview);
+
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     let file;
+    let filePreview;
     if (e.target.files !== null) {
       file = e.target.files[0];
+      filePreview = URL.createObjectURL(e.target.files[0]);
+      setPreview(filePreview);
     }
     // if (file !== undefined) {
     //   const filePreview = URL.createObjectURL(file);
@@ -44,6 +70,7 @@ const CreateProducts = () => {
 
   const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
     let file;
+
     if (e.target.files !== null) {
       file = e.target.files[0];
     }
@@ -113,175 +140,209 @@ const CreateProducts = () => {
   return (
     <>
       <section className="border-2">
-        {/* {preview && typeof preview !== ArrayBuffer ? (
-          <img src={preview} alt="hello" />
-        ) : (
-          ""
-        )} */}
-        <form onSubmit={handleSubmit(onSubmitHandler)}>
-          <h1>Create Product</h1>
-          <ul>
-            <li>
-              <p>{errors.name?.message}</p>
-              <label htmlFor="name">Name</label>
-              <input
-                {...register("name")}
-                type="text"
-                id="name"
-                placeholder="Name"
-              />
-            </li>
-            <li>
-              <p>{errors.description?.message}</p>
-              <label htmlFor="description">Description</label>
-              <input
-                {...register("description")}
-                type="text"
-                id="description"
-                placeholder="Description"
-              />
-            </li>
-            <li>
-              <p>{errors.phone?.message}</p>
-              <label htmlFor="phone">Phone</label>
-              <input
-                {...register("phone")}
-                type="number"
-                id="phone"
-                placeholder="phone"
-              />
-            </li>
-            <li>
-              <p>{errors.address?.message}</p>
-              <label htmlFor="address">Address</label>
-              <input
-                {...register("address")}
-                type="text"
-                id="address"
-                placeholder="address"
-              />
-            </li>
-            <li>
-              <p>{errors.email?.message}</p>
-              <label htmlFor="email">Email</label>
-              <input
-                {...register("email")}
-                type="email"
-                id="email"
-                placeholder="email"
-              />
-            </li>
-            <li>
-              <p>{errors.website?.message}</p>
-              <label htmlFor="website">Website</label>
-              <input
-                {...register("website")}
-                type="text"
-                id="website"
-                placeholder="Website"
-              />
-            </li>
-            <li>
-              <p>{errors.instagram?.message}</p>
-              <label htmlFor="instagram">Instagram</label>
-              <input
-                {...register("instagram")}
-                type="text"
-                id="instagram"
-                placeholder="Instagram"
-              />
-            </li>
-            <li>
-              <p>{errors.facebook?.message}</p>
-              <label htmlFor="facebook">Facebook</label>
-              <input
-                {...register("facebook")}
-                type="text"
-                id="facebook"
-                placeholder="Facebook"
-              />
-            </li>
-            <li>
-              <div>
-                <label htmlFor="type">Choose Type</label>
-              </div>
-              <select id="type" {...register("type")}>
-                {types.map((type, index) => {
-                  return (
-                    <option key={index} value={type}>
-                      {type}
-                    </option>
-                  );
-                })}
-              </select>
-            </li>
-            <li>
-              <div>
-                <label htmlFor="location">Choose Location</label>
-              </div>
-              <select id="location" {...register("location")}>
-                {locations.map((location, index) => {
-                  if (location === "--Kowloon--") {
-                    return (
-                      <option disabled key={index} value={location}>
-                        {location}
-                      </option>
-                    );
-                  } else if (location === "--Hong Kong Island--") {
-                    return (
-                      <option disabled key={index} value={location}>
-                        {location}
-                      </option>
-                    );
-                  } else if (location === "--New Territories--") {
-                    return (
-                      <option disabled key={index} value={location}>
-                        {location}
-                      </option>
-                    );
-                  }
-                  return (
-                    <option key={index} value={location}>
-                      {location}
-                    </option>
-                  );
-                })}
-              </select>
-            </li>
-            <li>
-              <div>
-                <label htmlFor="fileUploadLogo">Select Image for Logo..</label>
-              </div>
-              <input
-                accept="image/png, image/jpeg"
-                type="file"
-                id="fileUploadLogo"
-                onChange={handleLogo}
-                required
-              />
-              <div>
-                <button>upload</button>
-              </div>
-            </li>
-            <li>
-              <div>
-                <label htmlFor="fileupload">Select Image for Cover..</label>
-              </div>
-              <input
-                accept="image/png, image/jpeg"
-                type="file"
-                id="fileupload"
-                onChange={handleImage}
-                required
-              />
-            </li>
-            <li>
-              <button className="border-2 border-sky-500" type="submit">
-                Create
-              </button>
-            </li>
-          </ul>
-        </form>
+        <div className="flex flex-col items-center md:flex-row md:justify-evenly border border-red-100 max-w-full">
+          <div className="m-10 bg-white rounded-md drop-shadow-md w-[375px] md:w-[450px]">
+            <form onSubmit={handleSubmit(onSubmitHandler)}>
+              <h1 className="mx-4 mt-3 font-bold">Create Shop 🍃</h1>
+              <ul>
+                <li className="form-li-create">
+                  <label htmlFor="name">
+                    Name* <p className="form-error">{errors.name?.message}</p>
+                  </label>
+                  <input
+                    className="form-li-create-input"
+                    {...register("name")}
+                    type="text"
+                    id="name"
+                    placeholder="Name"
+                  />
+                </li>
+                <li className="form-li-create">
+                  <label htmlFor="description">
+                    Description*
+                    <p className="form-error">{errors.description?.message}</p>
+                  </label>
+                  <input
+                    className="form-li-create-input"
+                    {...register("description")}
+                    type="text"
+                    id="description"
+                    placeholder="Description"
+                  />
+                </li>
+                <li className="form-li-create">
+                  <p>{errors.phone?.message}</p>
+                  <label htmlFor="phone">Phone*</label>
+                  <input
+                    className="form-li-create-input"
+                    {...register("phone")}
+                    type="number"
+                    id="phone"
+                    placeholder="Phone"
+                  />
+                </li>
+                <li className="form-li-create">
+                  <p>{errors.address?.message}</p>
+                  <label htmlFor="address">Address*</label>
+                  <input
+                    className="form-li-create-input"
+                    {...register("address")}
+                    type="text"
+                    id="address"
+                    placeholder="address"
+                  />
+                </li>
+                <li className="form-li-create">
+                  <p>{errors.email?.message}</p>
+                  <label htmlFor="email">Email*</label>
+                  <input
+                    className="form-li-create-input"
+                    {...register("email")}
+                    type="email"
+                    id="email"
+                    placeholder="email"
+                  />
+                </li>
+                <li className="form-li-create">
+                  <p>{errors.website?.message}</p>
+                  <label htmlFor="website">Website</label>
+                  <input
+                    className="form-li-create-input"
+                    {...register("website")}
+                    type="text"
+                    id="website"
+                    placeholder="Website"
+                  />
+                </li>
+                <li className="form-li-create">
+                  <p>{errors.instagram?.message}</p>
+                  <label htmlFor="instagram">Instagram</label>
+                  <input
+                    className="form-li-create-input"
+                    {...register("instagram")}
+                    type="text"
+                    id="instagram"
+                    placeholder="Instagram"
+                  />
+                </li>
+                <li className="form-li-create">
+                  <p>{errors.facebook?.message}</p>
+                  <label htmlFor="facebook">Facebook</label>
+                  <input
+                    className="form-li-create-input"
+                    {...register("facebook")}
+                    type="text"
+                    id="facebook"
+                    placeholder="Facebook"
+                  />
+                </li>
+                <li className="form-li-create">
+                  <div>
+                    <label htmlFor="type">Choose Type</label>
+                  </div>
+                  <select
+                    className="form-li-create-input"
+                    id="type"
+                    {...register("type")}
+                  >
+                    {types.map((type, index) => {
+                      return (
+                        <option key={index} value={type}>
+                          {type}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </li>
+                <li className="form-li-create">
+                  <div>
+                    <label htmlFor="location">Choose Location</label>
+                  </div>
+                  <select
+                    className="form-li-create-input"
+                    id="location"
+                    {...register("location")}
+                  >
+                    {locations.map((location, index) => {
+                      if (location === "--Kowloon--") {
+                        return (
+                          <option disabled key={index} value={location}>
+                            {location}
+                          </option>
+                        );
+                      } else if (location === "--Hong Kong Island--") {
+                        return (
+                          <option disabled key={index} value={location}>
+                            {location}
+                          </option>
+                        );
+                      } else if (location === "--New Territories--") {
+                        return (
+                          <option disabled key={index} value={location}>
+                            {location}
+                          </option>
+                        );
+                      }
+                      return (
+                        <option key={index} value={location}>
+                          {location}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </li>
+                <li className="form-li-create">
+                  <div>
+                    <label htmlFor="fileUploadLogo">
+                      Select Image for Logo{" "}
+                      <span className="text-xs">
+                        (images to be less than 100kb)
+                      </span>
+                    </label>
+                  </div>
+                  <input
+                    accept="image/png, image/jpeg"
+                    type="file"
+                    id="fileUploadLogo"
+                    onChange={handleLogo}
+                    required
+                  />
+                </li>
+                <li className="form-li-create">
+                  <div>
+                    <label htmlFor="fileupload">
+                      Select Image for Cover{" "}
+                      <span className="text-xs">
+                        (images to be less than 100kb)
+                      </span>
+                    </label>
+                  </div>
+                  <input
+                    accept="image/png, image/jpeg"
+                    type="file"
+                    id="fileupload"
+                    onChange={handleImage}
+                    required
+                  />
+                </li>
+                <li className="m-2 flex justify-end">
+                  <button className="bg-emerald-500 mx-2" type="submit">
+                    Create
+                  </button>
+                </li>
+              </ul>
+            </form>
+          </div>
+          <div>
+            <h1 className="text-center my-5">Sample Card</h1>
+            <SampleProduct
+              name={data[0]}
+              type={data[1]}
+              location={data[2]}
+              cover={preview}
+            />
+          </div>
+        </div>
       </section>
     </>
   );
