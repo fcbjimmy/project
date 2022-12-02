@@ -31,6 +31,23 @@ export interface CreateProductInputs {
   // logo: { [key: string]: File } | string;
 }
 
+export interface EditProductInputs {
+  address: string;
+  location: string;
+  description: string;
+  email: string;
+  name: string;
+  phone: number;
+  type: string;
+  website: string;
+  cover: string | ArrayBuffer | null;
+  logo: string | ArrayBuffer | null;
+  sampleImageOne: string | ArrayBuffer | null;
+  sampleImageTwo: string | ArrayBuffer | null;
+  instagram: string;
+  facebook: string;
+}
+
 //auth context
 
 export interface setLocaleStorage {
@@ -144,6 +161,7 @@ export interface productStateTypes {
   allProducts: products[] | [];
   userProducts: products[] | [];
   isLoading: true | false;
+  success: true | false;
 }
 
 // export interface productAction {
@@ -184,6 +202,15 @@ export type getuserpkts = {
   payload: products[] | [];
 };
 
+export type editpktbegin = {
+  type: "EDIT_PRODUCT_BEGIN";
+};
+
+export type editpkt = {
+  type: "EDIT_PRODUCT";
+  payload: products;
+};
+
 export type productReducerType = (
   state: productStateTypes,
   action:
@@ -192,4 +219,6 @@ export type productReducerType = (
     | createuserpkts
     | setuploadingfalse
     | getuserpkts
+    | editpktbegin
+    | editpkt
 ) => productStateTypes;

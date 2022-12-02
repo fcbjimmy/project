@@ -16,9 +16,11 @@ import {
   createuserpkts,
   setuploadingfalse,
   getuserpkts,
+  EditProductInputs,
 } from "../helpers/data.types";
 import { productReducer } from "./reducer";
 import useAuthContext from "../hooks/useAuthContext";
+import { AllProducts } from "../components";
 
 interface Props {
   children: ReactNode;
@@ -32,6 +34,7 @@ const initialState: productStateTypes = {
   allProducts: [],
   userProducts: [],
   isLoading: false,
+  success: false,
 };
 
 export const productsContext = createContext<{
@@ -42,17 +45,18 @@ export const productsContext = createContext<{
   fetchAllProducts: () => void;
   fetchUserProducts: () => void;
   createProduct: (data: CreateProductInputs) => void;
+  editProduct: (data: EditProductInputs, shopId: number) => void;
 }>({
   state: initialState,
   dispatch: () => {},
   fetchAllProducts: () => {},
   fetchUserProducts: () => {},
   createProduct: () => {},
+  editProduct: () => {},
 });
 
 export const ProductContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
-
   const { user, token } = useAuthContext();
 
   useEffect(() => {}, [user, token]);
@@ -157,6 +161,58 @@ export const ProductContextProvider = ({ children }: Props) => {
     }
   };
 
+  const editProduct = async (data: EditProductInputs, shopId: number) => {
+    try {
+      dispatch({ type: "EDIT_PRODUCT_BEGIN" });
+      const {
+        name,
+        address,
+        phone,
+        website,
+        email,
+        description,
+        type,
+        logo,
+        cover,
+        sampleImageOne,
+        sampleImageTwo,
+        location,
+        instagram,
+        facebook,
+      } = data;
+
+      const {
+        data: productData,
+      }: { data: { product: products; msg: string } } =
+        await productFetch.patch(`product/updateProduct/${shopId}`, {
+          name,
+          address,
+          phone,
+          website,
+          email,
+          description,
+          type,
+          logo,
+          cover,
+          location,
+          instagram,
+          facebook,
+          sampleImageOne,
+          sampleImageTwo,
+        });
+      console.log(productData);
+      const { product: productEdited, msg } = productData;
+      toast.success(`${msg}`, { position: "top-center" });
+      dispatch({ type: "EDIT_PRODUCT", payload: productEdited });
+    } catch (error) {
+      dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
+      console.log(error);
+      if (error instanceof AxiosError) {
+        toast.error(`${error?.response?.data}`, { position: "top-center" });
+      }
+    }
+  };
+
   const contextValue = useMemo(
     () => ({
       state,
@@ -164,6 +220,7 @@ export const ProductContextProvider = ({ children }: Props) => {
       fetchAllProducts,
       fetchUserProducts,
       createProduct,
+      editProduct,
     }),
     [state, dispatch]
   );

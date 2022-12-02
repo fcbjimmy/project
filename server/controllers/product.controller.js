@@ -51,9 +51,6 @@ const createProduct = async (req, res) => {
     folder: "file-upload-zero",
   });
 
-  console.log(resultCover);
-  console.log(resultLogo);
-
   const product = await Product.create({
     name,
     address,
@@ -70,8 +67,7 @@ const createProduct = async (req, res) => {
     userId: req.user.userId,
   });
 
-  console.log(product);
-  res.status(StatusCodes.OK).json({ product, msg: "Project created" });
+  res.status(StatusCodes.OK).json({ product, msg: "Shop Created" });
 };
 
 const getAllProductsFromUser = async (req, res) => {
@@ -108,6 +104,8 @@ const updateProduct = async (req, res) => {
     location,
     instagram,
     facebook,
+    sampleImageOne,
+    sampleImageTwo,
   } = req.body;
 
   if (
@@ -118,8 +116,6 @@ const updateProduct = async (req, res) => {
     description === "" ||
     type === "" ||
     location == "" ||
-    logo === "" ||
-    cover === "" ||
     instagram === "" ||
     facebook === ""
   ) {
@@ -136,6 +132,44 @@ const updateProduct = async (req, res) => {
     throw new CustomError.UnauthenticatedError("No access");
   }
 
+  if (typeof cover === "string" && !cover.startsWith("http")) {
+    const resultCover = await cloudinary.uploader.upload(cover, {
+      use_filename: true,
+      folder: "file-upload-zero",
+    });
+    product.cover = resultCover?.secure_url;
+  }
+
+  if (typeof logo === "string" && !logo.startsWith("http")) {
+    const resultLogo = await cloudinary.uploader.upload(logo, {
+      use_filename: true,
+      folder: "file-upload-zero",
+    });
+    product.logo = resultLogo?.secure_url;
+  }
+
+  if (
+    typeof sampleImageOne === "string" &&
+    !sampleImageOne.startsWith("http")
+  ) {
+    const resultSampleImageOne = await cloudinary.uploader.upload(logo, {
+      use_filename: true,
+      folder: "file-upload-zero",
+    });
+    product.sampleImageOne = resultSampleImageOne?.secure_url;
+  }
+
+  if (
+    typeof sampleImageTwo === "string" &&
+    !sampleImageTwo.startsWith("http")
+  ) {
+    const resultSampleImageTwo = await cloudinary.uploader.upload(logo, {
+      use_filename: true,
+      folder: "file-upload-zero",
+    });
+    product.sampleImageTwo = resultSampleImageTwo?.secure_url;
+  }
+
   product.name = name;
   product.address = address;
   product.location = location;
@@ -144,12 +178,10 @@ const updateProduct = async (req, res) => {
   product.email = email;
   product.description = description;
   product.type = type;
-  product.logo = logo;
-  product.cover = cover;
   product.instagram = instagram;
   product.facebook = facebook;
   await product.save();
-  res.status(StatusCodes.OK).json(product);
+  res.status(StatusCodes.OK).json({ product, msg: "Shop Edited" });
 };
 
 const deleteProduct = async (req, res) => {

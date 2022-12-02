@@ -28,7 +28,7 @@ const notFound = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
 //routes
-app.use(bodyParser.json({ limit: "500kb" }));
+app.use(bodyParser.json({ limit: "600kb" }));
 app.use(express.json());
 app.use(fileUpload({ useTempFiles: true }));
 app.use(cors());

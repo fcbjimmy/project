@@ -21,7 +21,7 @@ export const schema = yup.object().shape({
   description: yup
     .string()
     .min(4, "Name must be at least 4 characters long")
-    .max(32)
+    .max(280)
     .required(),
   type: yup.string().required(),
   instagram: yup.string().required(),

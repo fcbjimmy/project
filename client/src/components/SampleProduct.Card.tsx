@@ -33,9 +33,9 @@ const SampleProduct = ({ name, location, type, cover }: Props) => {
             <img className="w-12 object-cover mx-auto" src={img} alt="hello" />
           </div>
         </span>
-        <div className="flex justify-end text-3xl gap-2 w-56">
-          <FaInstagramSquare />
-          <FaWhatsappSquare />
+        <div className="flex justify-end mr-2">
+          <FaInstagramSquare className="text-3xl mx-1" />
+          <FaWhatsappSquare className="text-3xl mx-1" />
         </div>
       </div>
     </>

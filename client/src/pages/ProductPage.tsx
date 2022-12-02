@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import useProductContext from "../hooks/useProductContext";
+import { products } from "../helpers/data.types";
 import { useParams } from "react-router-dom";
 import {
   BsFillPinMapFill,
@@ -17,15 +18,12 @@ const ProductPage = (props: Props) => {
     fetchAllProducts();
   }, []);
 
-  let { id } = useParams();
-  const shopId = parseInt(id ? id : "");
-  const shop = allProducts.find((item, index) => {
-    return item.id === shopId;
-  });
-  console.log(allProducts);
-  console.log(shop);
+  const { id } = useParams();
+  const shopId: number = parseInt(id ? id : "");
+  const shop = allProducts.find((item) => item.id === shopId);
+
   return (
-    <section className="w-full h-screen flex justify-center">
+    <section className="w-full min-h-full flex justify-center">
       <div className="flex flex-col items-center w-3/4">
         <h1 className="text-3xl font-bold border-b-2 self-start border-gray-900">
           Shops

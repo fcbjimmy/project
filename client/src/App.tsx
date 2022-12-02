@@ -5,6 +5,7 @@ import {
   CreateProducts,
   ProductPage,
   About,
+  EditProduct,
 } from "./pages/index";
 import { CurrentUserProducts, Navbar } from "./components";
 import { Navigate, useLocation, Routes, Route } from "react-router-dom";
@@ -35,6 +36,7 @@ function App() {
         />
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/about" element={<About />} />
+        <Route path="/editproduct/:id" element={<EditProduct />} />
       </Routes>
     </div>
   );

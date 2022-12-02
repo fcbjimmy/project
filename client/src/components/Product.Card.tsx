@@ -1,15 +1,19 @@
 import React from "react";
 import { FaWhatsappSquare, FaInstagramSquare } from "react-icons/fa";
-import { isTypeNode } from "typescript";
+import { isMetaProperty, isTypeNode } from "typescript";
 import img from "../assets/certified.png";
+import delet from "../assets/delete.png";
+import edit from "../assets/edit.png";
 import { products } from "../helpers/data.types";
 import { useNavigate } from "react-router-dom";
+import useAuthContext from "../hooks/useAuthContext";
 
 type Props = {
   productsProp: products[] | [];
 };
 
 const ProductCard = ({ productsProp }: Props) => {
+  const { user } = useAuthContext();
   const navigate = useNavigate();
 
   // const handleClick=()=>{
@@ -47,35 +51,49 @@ const ProductCard = ({ productsProp }: Props) => {
                 />
               </div>
             </span>
-            <div className="flex justify-end text-3xl gap-2 w-56">
-              <FaInstagramSquare />
-              <FaWhatsappSquare />
-            </div>
+            {item.userId === user?.id || user?.role === "admin" ? (
+              <div className="flex justify-between">
+                <div className="flex ml-2">
+                  <img
+                    className="w-8 mx-1 hover:scale-110 active:translate-y-0.5 duration-75"
+                    src={edit}
+                    alt="edit"
+                    onClick={(): void => navigate(`/editproduct/${item.id}`)}
+                  />
+                  <img
+                    className="w-8 mx-1 hover:scale-110 active:translate-y-0.5 duration-75"
+                    src={delet}
+                    alt="delete"
+                  />
+                </div>
+                <div className="flex mr-2">
+                  <FaInstagramSquare className="text-3xl mx-1" />
+                  <FaWhatsappSquare className="text-3xl mx-1" />
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-end mr-2">
+                <FaInstagramSquare className="text-3xl mx-1" />
+                <FaWhatsappSquare className="text-3xl mx-1" />
+              </div>
+            )}
+            {/* <div className="flex justify-between">
+              <div className="flex ml-2">
+                <img className="w-8 mx-1" src={edit} alt="edit" />
+                <img className="w-8 mx-1" src={delet} alt="delete" />
+              </div>
+              <div className="flex mr-2">
+                <FaInstagramSquare className="text-3xl mx-1" />
+                <FaWhatsappSquare className="text-3xl mx-1" />
+              </div>
+            </div> */}
+            {/* <div className="flex justify-end mr-2">
+              <FaInstagramSquare className="text-3xl mx-1" />
+              <FaWhatsappSquare className="text-3xl mx-1" />
+            </div> */}
           </div>
         );
       })}
-      {/* <div className=" cursor-pointer w-60 h-80 border-none rounded-2xl shadow-xl bg-slate-100 hover:shadow-3xl ease-in hover:duration-150">
-        <div className="flex justify-center">
-          <img
-            className="h-32 w-full  rounded-t-2xl object-cover"
-            src="https://res.cloudinary.com/dp5axfdaj/image/upload/v1668699843/cld-sample-5.jpg"
-            alt="test"
-          />
-        </div>
-        <div className="h-32">
-          <div className="flex justify-center items-center my-2.5">
-            <span className="text-xs">Health and Beauty</span>
-            <span>&nbsp;|&nbsp;</span>
-            <span className="text-xs">Causeway Bay</span>
-          </div>
-          <p className="text-center font-bold text-xl my-1">Nike</p>
-          <img className="w-12 object-cover mx-auto" src={img} alt="hello" />
-        </div>
-        <div className="flex justify-end text-3xl gap-2 w-56">
-          <FaInstagramSquare />
-          <FaWhatsappSquare />
-        </div>
-      </div> */}
     </>
   );
 };

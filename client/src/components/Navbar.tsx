@@ -66,9 +66,9 @@ const Navbar = (props: Props) => {
           )}
           <div className="pr-4 text-2xl md:hidden" onClick={handleClick}>
             {!nav ? (
-              <AiOutlineMenu className="cursor-pointer active:translate-y-0.5 transition duration-150" />
+              <AiOutlineMenu className="text-3xl cursor-pointer active:translate-y-0.5 transition duration-150" />
             ) : (
-              <GrClose className="cursor-pointer active:translate-y-0.5 transition duration-150" />
+              <GrClose className="text-3xl cursor-pointer active:translate-y-0.5 transition duration-150" />
             )}
           </div>
         </div>
@@ -88,26 +88,39 @@ const Navbar = (props: Props) => {
               <li className="menu-li">My Shops</li>
             </Link>
           )}
-          <div className="flex flex-col my-4 gap-4">
-            <button
-              className="bg-transparent text-emerald-300"
-              onClick={() => {
-                navigate("/login");
-                setNav(!nav);
-              }}
-            >
-              Sign in
-            </button>
-            <button
-              className="mb-4"
-              onClick={() => {
-                navigate("/signup");
-                setNav(!nav);
-              }}
-            >
-              Sign up
-            </button>
-          </div>
+          {user ? (
+            <div className="flex flex-col my-4 gap-4">
+              <button
+                onClick={() => {
+                  logout();
+                  setNav(!nav);
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="flex flex-col my-4 gap-4">
+              <button
+                className="bg-transparent text-emerald-300"
+                onClick={() => {
+                  navigate("/login");
+                  setNav(!nav);
+                }}
+              >
+                Sign in
+              </button>
+              <button
+                className="mb-4"
+                onClick={() => {
+                  navigate("/signup");
+                  setNav(!nav);
+                }}
+              >
+                Sign up
+              </button>
+            </div>
+          )}
         </ul>
       </nav>
       <div className="w-screen h-[80px]"></div>

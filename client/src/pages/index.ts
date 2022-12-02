@@ -4,5 +4,6 @@ import Main from "./Main";
 import CreateProducts from "./CreateProducts";
 import ProductPage from "./ProductPage";
 import About from "./About";
+import EditProduct from "./EditProduct";
 
-export { Signup, Login, Main, CreateProducts, ProductPage, About };
+export { Signup, Login, Main, CreateProducts, ProductPage, About, EditProduct };

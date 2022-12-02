@@ -5,11 +5,11 @@ import ProductCard from "./Product.Card";
 
 const CurrentUserProducts = () => {
   const { fetchUserProducts, userProducts } = useProductContext();
-  const { user } = useAuthContext();
+  const { user, isLoading } = useAuthContext();
 
   useEffect(() => {
     fetchUserProducts();
-  }, [user]);
+  }, []);
 
   if (userProducts) {
     console.log(userProducts);
@@ -17,8 +17,14 @@ const CurrentUserProducts = () => {
 
   return (
     <>
-      <div>User Products</div>
-      <ProductCard productsProp={userProducts} />
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <div>User Products</div>
+          <ProductCard productsProp={userProducts} />
+        </>
+      )}
     </>
   );
 };

@@ -54,6 +54,24 @@ export const productReducer: productReducerType = (state, action) => {
         ...state,
         isLoading: false,
         userProducts: [action.payload, ...state.userProducts],
+        allProducts: [action.payload, ...state.allProducts],
+      };
+    case "EDIT_PRODUCT_BEGIN":
+      return { ...state, isLoading: true, success: false };
+    case "EDIT_PRODUCT":
+      console.log(action.payload);
+      const index = action.payload.id;
+      const filteredArray = state.allProducts.filter((item) => {
+        return item.id !== index;
+      });
+      const filteredArrayUser = state.userProducts.filter((item) => {
+        return item.id !== index;
+      });
+      return {
+        ...state,
+        isLoading: false,
+        userProducts: [action.payload, ...filteredArrayUser],
+        allProducts: [action.payload, ...filteredArray],
       };
     case "SETUP_PRODUCT_LOADING_FALSE":
       return { ...state, isLoading: false };

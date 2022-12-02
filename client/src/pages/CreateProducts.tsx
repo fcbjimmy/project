@@ -1,11 +1,9 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "../models/create";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CreateProductInputs } from "../helpers/data.types";
-import useAuthContext from "../hooks/useAuthContext";
 import useProductContext from "../hooks/useProductContext";
-import { Link } from "react-router-dom";
 import { locations, types } from "../helpers/options";
 import { SampleProduct } from "../components";
 
