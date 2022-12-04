@@ -17,7 +17,7 @@ import { SampleProduct } from "../components";
 // }
 
 const CreateProducts = () => {
-  const { createProduct } = useProductContext();
+  const { createProduct, userProducts } = useProductContext();
   const {
     register,
     formState: { errors },
@@ -45,11 +45,9 @@ const CreateProducts = () => {
   // console.log(sampleName);
   // console.log(sampleType);
   // console.log(sampleLocation);
+  console.log(userProducts);
 
   const data = watch(["name", "type", "location"]);
-
-  console.log(data);
-  console.log(preview);
 
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     let file;
@@ -138,7 +136,7 @@ const CreateProducts = () => {
   return (
     <>
       <section className="border-2">
-        <div className="flex flex-col items-center md:flex-row md:justify-evenly border border-red-100 max-w-full">
+        <div className="flex flex-col items-center md:flex-row md:justify-evenly border max-w-full">
           <div className="m-10 bg-white rounded-md drop-shadow-md w-[375px] md:w-[450px]">
             <form onSubmit={handleSubmit(onSubmitHandler)}>
               <h1 className="mx-4 mt-3 font-bold">Create Shop 🍃</h1>

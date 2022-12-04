@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import useProductContext from "../hooks/useProductContext";
 import useAuthContext from "../hooks/useAuthContext";
 import ProductCard from "./Product.Card";
+import img from "../assets/tabs.png";
+import { Link } from "react-router-dom";
 
 const CurrentUserProducts = () => {
   const { fetchUserProducts, userProducts } = useProductContext();
@@ -11,21 +13,39 @@ const CurrentUserProducts = () => {
     fetchUserProducts();
   }, []);
 
-  if (userProducts) {
-    console.log(userProducts);
-  }
-
   return (
-    <>
+    <section className="w-full min-h-full">
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <>
-          <div>User Products</div>
-          <ProductCard productsProp={userProducts} />
-        </>
+        <div className="flex flex-col mt-10 max-w-[375px] md:max-w-2xl lg:max-w-4xl mx-auto">
+          <div className="flex justify-between">
+            <div className="text-2xl font-bold underline">User Shops</div>
+            <div>
+              <Link to={"/create"}>
+                <img
+                  className="w-8 hover:scale-105 duration-150 active:translate-y-1 md:hidden"
+                  src={img}
+                  alt="/"
+                />
+              </Link>
+              <div className="mdmax:hidden cursor-pointer border hover:scale-105 duration-150 active:translate-y-1 create-pkt-button ">
+                <Link to={"/create"}>
+                  <span className="">Create</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+          {userProducts.length < 1 ? (
+            <div className="text-xl mt-8">No Shops</div>
+          ) : (
+            <div className="self-center lg:grid lg:grid-cols-3 gap-x-20">
+              <ProductCard productsProp={userProducts} />
+            </div>
+          )}
+        </div>
       )}
-    </>
+    </section>
   );
 };
 

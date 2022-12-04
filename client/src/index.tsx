@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { AuthContextProvider } from "./context/AuthContext";
 import { ProductContextProvider } from "./context/ProductContext";
+import { ModalContextProvider } from "./context/ModalContext";
 import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
@@ -13,9 +14,11 @@ root.render(
   <React.StrictMode>
     <AuthContextProvider>
       <ProductContextProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <ModalContextProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ModalContextProvider>
       </ProductContextProvider>
     </AuthContextProvider>
   </React.StrictMode>

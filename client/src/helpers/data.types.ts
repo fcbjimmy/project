@@ -211,6 +211,14 @@ export type editpkt = {
   payload: products;
 };
 
+export type shopId = { shopId: number };
+export type id = number;
+
+export type deletepkt = {
+  type: "DELETE_PRODUCT";
+  payload: shopId;
+};
+
 export type productReducerType = (
   state: productStateTypes,
   action:
@@ -221,4 +229,5 @@ export type productReducerType = (
     | getuserpkts
     | editpktbegin
     | editpkt
+    | deletepkt
 ) => productStateTypes;

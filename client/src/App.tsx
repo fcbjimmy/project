@@ -7,14 +7,18 @@ import {
   About,
   EditProduct,
 } from "./pages/index";
-import { CurrentUserProducts, Navbar } from "./components";
+import { CurrentUserProducts, Navbar, Modal } from "./components";
 import { Navigate, useLocation, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAuthContext from "./hooks/useAuthContext";
+import { modalContext } from "./context/ModalContext";
+import { useContext } from "react";
 
 function App() {
   const { user } = useAuthContext();
+  const { modal } = useContext(modalContext);
+
   return (
     <div className="bg-slate-100 w-full min-h-screen">
       <ToastContainer />
@@ -38,6 +42,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/editproduct/:id" element={<EditProduct />} />
       </Routes>
+      {modal && <Modal />}
     </div>
   );
 }

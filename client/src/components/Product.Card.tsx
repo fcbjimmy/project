@@ -1,12 +1,13 @@
-import React from "react";
+import { useContext } from "react";
 import { FaWhatsappSquare, FaInstagramSquare } from "react-icons/fa";
-import { isMetaProperty, isTypeNode } from "typescript";
 import img from "../assets/certified.png";
 import delet from "../assets/delete.png";
 import edit from "../assets/edit.png";
 import { products } from "../helpers/data.types";
 import { useNavigate } from "react-router-dom";
 import useAuthContext from "../hooks/useAuthContext";
+import useProductContext from "../hooks/useProductContext";
+import { modalContext } from "../context/ModalContext";
 
 type Props = {
   productsProp: products[] | [];
@@ -14,18 +15,23 @@ type Props = {
 
 const ProductCard = ({ productsProp }: Props) => {
   const { user } = useAuthContext();
+  const { deleteProduct } = useProductContext();
   const navigate = useNavigate();
+  const { modal, setModal, setShopId } = useContext(modalContext);
 
-  // const handleClick=()=>{
+  const handleClick = (id: number): void => {
+    setModal(!modal);
+    setShopId(id);
+    // deleteProduct(id);
+  };
 
-  // }
   return (
     <>
       {productsProp.map((item, index) => {
         return (
           <div
             key={index}
-            className=" cursor-pointer w-60 h-80 border-none rounded-2xl shadow-xl bg-slate-100 hover:shadow-3xl ease-in hover:duration-150"
+            className=" cursor-pointer w-60 h-80 border-none rounded-2xl shadow-xl bg-slate-100 hover:shadow-3xl ease-in hover:duration-150 mt-8"
           >
             <span onClick={(): void => navigate(`/product/${item.id}`)}>
               <div className="flex justify-center">
@@ -64,6 +70,7 @@ const ProductCard = ({ productsProp }: Props) => {
                     className="w-8 mx-1 hover:scale-110 active:translate-y-0.5 duration-75"
                     src={delet}
                     alt="delete"
+                    onClick={() => handleClick(item.id)}
                   />
                 </div>
                 <div className="flex mr-2">

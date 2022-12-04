@@ -13,11 +13,13 @@ const useProductContext = () => {
     fetchUserProducts,
     createProduct,
     editProduct,
+    deleteProduct,
   } = contextProductValue;
 
   return {
     ...state,
     dispatch,
+    deleteProduct,
     fetchAllProducts,
     fetchUserProducts,
     createProduct,

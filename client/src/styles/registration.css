@@ -27,3 +27,15 @@
 .reg-form-button {
   @apply border-2 bg-emerald-500 max-w-xl my-5;
 }
+
+.create-pkt-button {
+  @apply border bg-emerald-500 max-w-xl rounded-md p-1 drop-shadow-md;
+}
+
+.button-animation {
+  @apply hover:scale-110 active:translate-y-0.5 duration-75;
+}
+
+.span-button {
+  @apply border-2 cursor-pointer border-emerald-500 bg-emerald-500 rounded p-0.5;
+}

@@ -24,11 +24,11 @@ const ProductPage = (props: Props) => {
 
   return (
     <section className="w-full min-h-full flex justify-center">
-      <div className="flex flex-col items-center w-3/4">
+      <div className="flex flex-col items-center w-3/4 mt-10">
         <h1 className="text-3xl font-bold border-b-2 self-start border-gray-900">
           Shops
         </h1>
-        <div>
+        <div className="mt-4">
           <img className="max-w-xs" src={shop?.logo} alt={shop?.name} />
         </div>
         <div className="text-3xl font-bold mt-4">{shop?.name}</div>

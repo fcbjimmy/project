@@ -17,10 +17,14 @@ import {
   setuploadingfalse,
   getuserpkts,
   EditProductInputs,
+  editpktbegin,
+  editpkt,
+  deletepkt,
 } from "../helpers/data.types";
 import { productReducer } from "./reducer";
 import useAuthContext from "../hooks/useAuthContext";
 import { AllProducts } from "../components";
+import { number } from "yup";
 
 interface Props {
   children: ReactNode;
@@ -40,12 +44,20 @@ const initialState: productStateTypes = {
 export const productsContext = createContext<{
   state: productStateTypes;
   dispatch: React.Dispatch<
-    setupbegin | getallpkts | createuserpkts | setuploadingfalse | getuserpkts
+    | setupbegin
+    | getallpkts
+    | createuserpkts
+    | setuploadingfalse
+    | getuserpkts
+    | editpktbegin
+    | editpkt
+    | deletepkt
   >;
   fetchAllProducts: () => void;
   fetchUserProducts: () => void;
   createProduct: (data: CreateProductInputs) => void;
   editProduct: (data: EditProductInputs, shopId: number) => void;
+  deleteProduct: (shopId: number) => void;
 }>({
   state: initialState,
   dispatch: () => {},
@@ -53,6 +65,7 @@ export const productsContext = createContext<{
   fetchUserProducts: () => {},
   createProduct: () => {},
   editProduct: () => {},
+  deleteProduct: () => {},
 });
 
 export const ProductContextProvider = ({ children }: Props) => {
@@ -132,8 +145,9 @@ export const ProductContextProvider = ({ children }: Props) => {
       } = data;
       const {
         data: productData,
-      }: { data: { products: products; msg: string } } =
-        await productFetch.post("product/createProduct", {
+      }: { data: { product: products; msg: string } } = await productFetch.post(
+        "product/createProduct",
+        {
           name,
           address,
           phone,
@@ -146,9 +160,9 @@ export const ProductContextProvider = ({ children }: Props) => {
           location,
           instagram,
           facebook,
-        });
-
-      const { products: productCreated, msg } = productData;
+        }
+      );
+      const { product: productCreated, msg } = productData;
 
       dispatch({ type: "CREATE_PRODUCTS", payload: productCreated });
       toast.success(`${msg}`, { position: "top-center" });
@@ -200,10 +214,9 @@ export const ProductContextProvider = ({ children }: Props) => {
           sampleImageOne,
           sampleImageTwo,
         });
-      console.log(productData);
       const { product: productEdited, msg } = productData;
-      toast.success(`${msg}`, { position: "top-center" });
       dispatch({ type: "EDIT_PRODUCT", payload: productEdited });
+      toast.success(`${msg}`, { position: "top-center" });
     } catch (error) {
       dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
       console.log(error);
@@ -213,6 +226,22 @@ export const ProductContextProvider = ({ children }: Props) => {
     }
   };
 
+  const deleteProduct = async (shopId: number) => {
+    try {
+      dispatch({ type: "SETUP_PRODUCT_BEGIN" });
+      const {
+        data: { msg },
+      } = await productFetch.delete(`product/deleteProduct/${shopId}`);
+      dispatch({ type: "DELETE_PRODUCT", payload: { shopId } });
+      toast.success(`${msg}`, { position: "top-center" });
+    } catch (error) {
+      dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
+      console.log(error);
+      if (error instanceof AxiosError) {
+        toast.error(`${error?.response?.data}`, { position: "top-center" });
+      }
+    }
+  };
   const contextValue = useMemo(
     () => ({
       state,
@@ -221,6 +250,7 @@ export const ProductContextProvider = ({ children }: Props) => {
       fetchUserProducts,
       createProduct,
       editProduct,
+      deleteProduct,
     }),
     [state, dispatch]
   );

@@ -157,7 +157,7 @@ const EditProduct = (props: Props) => {
       sampleImageTwo,
     };
     editProduct(formData, shopId);
-    navigate("/userProducts");
+    // navigate("/userProducts");
   };
 
   return (

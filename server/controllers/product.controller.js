@@ -197,7 +197,7 @@ const deleteProduct = async (req, res) => {
   await Product.destroy({
     where: { id, userId: req.user.userId },
   });
-  res.status(StatusCodes.ACCEPTED).json({ msg: "Product deleted" });
+  res.status(StatusCodes.ACCEPTED).json({ msg: "Shop Deleted" });
 };
 
 const adminDeleteProduct = async (req, res) => {

@@ -50,16 +50,17 @@ export const productReducer: productReducerType = (state, action) => {
         isLoading: false,
       };
     case "CREATE_PRODUCTS":
+      console.log("Reducer page");
+      console.log(action.payload);
       return {
         ...state,
         isLoading: false,
-        userProducts: [action.payload, ...state.userProducts],
-        allProducts: [action.payload, ...state.allProducts],
+        userProducts: [...state.userProducts, action.payload],
+        allProducts: [...state.allProducts, action.payload],
       };
     case "EDIT_PRODUCT_BEGIN":
       return { ...state, isLoading: true, success: false };
     case "EDIT_PRODUCT":
-      console.log(action.payload);
       const index = action.payload.id;
       const filteredArray = state.allProducts.filter((item) => {
         return item.id !== index;
@@ -70,8 +71,22 @@ export const productReducer: productReducerType = (state, action) => {
       return {
         ...state,
         isLoading: false,
-        userProducts: [action.payload, ...filteredArrayUser],
-        allProducts: [action.payload, ...filteredArray],
+        userProducts: [...filteredArrayUser, action.payload],
+        allProducts: [...filteredArray, action.payload],
+      };
+    case "DELETE_PRODUCT":
+      const { shopId } = action.payload;
+      const deleteItemAllProducts = state.allProducts.filter((item) => {
+        return item.id !== shopId;
+      });
+      const deleteItemUserProducts = state.userProducts.filter((item) => {
+        return item.id !== shopId;
+      });
+      return {
+        ...state,
+        isLoading: false,
+        allProducts: [...deleteItemAllProducts],
+        userProducts: [...deleteItemUserProducts],
       };
     case "SETUP_PRODUCT_LOADING_FALSE":
       return { ...state, isLoading: false };
