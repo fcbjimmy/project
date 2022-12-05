@@ -23,3 +23,5 @@ https://stackoverflow.com/questions/58473477/angular-filereader-onloadend-return
 // whatsapp phone
 // Email of the shop (to be displayed)
 // Instagram (pls provide link)
+
+https://stackoverflow.com/questions/59636806/react-router-link-in-select-option

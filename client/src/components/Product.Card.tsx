@@ -36,7 +36,7 @@ const ProductCard = ({ productsProp }: Props) => {
             <span onClick={(): void => navigate(`/product/${item.id}`)}>
               <div className="flex justify-center">
                 <img
-                  className="h-32 w-full  rounded-t-2xl object-cover"
+                  className="h-32 w-full rounded-t-2xl object-cover"
                   src={item.cover}
                   alt={item.name}
                 />

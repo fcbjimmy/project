@@ -111,9 +111,8 @@ export const ProductContextProvider = ({ children }: Props) => {
   const fetchAllProducts = async () => {
     try {
       dispatch({ type: "SETUP_PRODUCT_BEGIN" });
-      const { data } = await productFetch.get(`auth/showAllProducts?cat=0`);
+      const { data } = await productFetch.get("auth/showAllProducts");
       const { products }: { products: products[] | [] } = data;
-      console.log(products);
       dispatch({ type: "GET_PRODUCTS", payload: products });
     } catch (error) {
       dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
@@ -126,7 +125,6 @@ export const ProductContextProvider = ({ children }: Props) => {
       dispatch({ type: "SETUP_PRODUCT_BEGIN" });
       const { data } = await productFetch.get(`auth/showAllProducts?cat=${id}`);
       const { products }: { products: products[] | [] } = data;
-      console.log(products);
       dispatch({ type: "GET_PRODUCTS_PAGE", payload: products });
     } catch (error) {
       dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });

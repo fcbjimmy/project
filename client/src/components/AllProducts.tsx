@@ -31,25 +31,12 @@ const AllProducts = () => {
   }, []);
 
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value);
-
     const number = parseInt(e.target.value);
     setFilter(number);
     navigate(`/allshops?cat=${e.target.value}`);
   };
 
-  // const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   // navigate(`/allshops?cat=${e.target.value}`);
-  //   console.log(e.target.value);
-  //   // setFilter(e.target.value);
-  //   // const test = searchParams.get("cat");
-  //   // if (typeof test === "string") {
-  //   //   cat = parseInt(test);
-  //   // }
-  //   // console.log(cat);
-  // };
-
-  const filteredShops = allProducts.filter((item, index) => {
+  const filteredShops = allProducts.filter((item) => {
     if (filter === 0) {
       return item;
     } else if (filter === 1 || 2 || 3 || 4) return item.type === types[filter];

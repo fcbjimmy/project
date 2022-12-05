@@ -32,6 +32,7 @@ module.exports = {
       },
       colors: {
         forestGreen: "#30596A",
+        forest: "#1F4564",
       },
     },
   },
