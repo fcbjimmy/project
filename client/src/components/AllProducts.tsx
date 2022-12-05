@@ -1,40 +1,58 @@
 import React, { useEffect, useState } from "react";
 import useProductContext from "../hooks/useProductContext";
 import ProductCard from "./Product.Card";
-import { types } from "../helpers/options";
-
+// import { types } from "../helpers/options";
+import { useSearchParams, useNavigate, Link } from "react-router-dom";
 // type Props = {}
 
-// const types = [
-//   "All",
-//   "Restaurant",
-//   "Shopping",
-//   "Health and Beauty",
-//   "Grocery",
-//   "other",
-// ];
+const types = [
+  "All",
+  "Restaurant",
+  "Shopping",
+  "Health and Beauty",
+  "Grocery",
+  "other",
+];
 
 const AllProducts = () => {
   const { fetchAllProducts, allProducts, isLoading } = useProductContext();
-  const [filter, setFilter] = useState<string>("0");
+  const [filter, setFilter] = useState<number>(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    //
     fetchAllProducts();
+    const test = searchParams.get("cat");
+    if (test !== null) {
+      const cat = parseInt(test);
+      setFilter(cat);
+    }
   }, []);
 
-  // if (allProducts) {
-  //   console.log(allProducts);
-  // }
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // console.log(e.target.value);
-    setFilter(e.target.value);
+    console.log(e.target.value);
+
+    const number = parseInt(e.target.value);
+    setFilter(number);
+    navigate(`/allshops?cat=${e.target.value}`);
   };
 
+  // const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   // navigate(`/allshops?cat=${e.target.value}`);
+  //   console.log(e.target.value);
+  //   // setFilter(e.target.value);
+  //   // const test = searchParams.get("cat");
+  //   // if (typeof test === "string") {
+  //   //   cat = parseInt(test);
+  //   // }
+  //   // console.log(cat);
+  // };
+
   const filteredShops = allProducts.filter((item, index) => {
-    if (filter === "") {
+    if (filter === 0) {
       return item;
-    }
-    return item.type === filter;
+    } else if (filter === 1 || 2 || 3 || 4) return item.type === types[filter];
   });
 
   return (
@@ -52,11 +70,11 @@ const AllProducts = () => {
               className="p-1"
               name="category"
               onChange={handleChangeSelect}
+              value={filter}
             >
-              <option value="">All</option>
               {types.map((item, index) => {
                 return (
-                  <option value={item} key={index}>
+                  <option value={index} key={index}>
                     {item}
                   </option>
                 );
