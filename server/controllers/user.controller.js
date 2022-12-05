@@ -6,6 +6,15 @@ const { createJWT } = require("../utils/jwt");
 const { comparePasswords } = require("../utils/comparePassword");
 const bcrypt = require("bcryptjs");
 
+const types = {
+  0: "All",
+  1: "Restaurant",
+  2: "Shopping",
+  3: "Health and Beauty",
+  4: "Grocery",
+  5: "other",
+};
+
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -74,7 +83,22 @@ const showCurrentUser = async (req, res) => {
 };
 
 const showAllProducts = async (req, res) => {
-  const products = await Product.findAll();
+  console.log(req.query);
+  const { cat } = req.query;
+  let products;
+
+  if (types[cat] === "All") {
+    products = await Product.findAll();
+  } else if (
+    types[cat] === "Restaurant" ||
+    "Shopping" ||
+    "Health and Beauty" ||
+    "Grocery" ||
+    "other"
+  ) {
+    products = await Product.findAll({ where: { type: types[cat] } });
+  }
+  // const products = await Product.findAll({ where: { type: type } });
   res.status(StatusCodes.OK).json({ products });
 };
 

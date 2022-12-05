@@ -15,12 +15,6 @@ const Main = () => {
           <button onClick={logout} className="bg-white border-2 text-blue-300">
             logout
           </button>
-          <p>
-            <Link to={"/userProducts"}>User products</Link>
-          </p>
-          <p>
-            <Link to={"/create"}>Create products</Link>
-          </p>
         </>
       ) : (
         <>
@@ -32,9 +26,6 @@ const Main = () => {
           </div>
         </>
       )}
-      <section className="flex flex-col justify-center items-center">
-        <AllProducts />
-      </section>
     </div>
   );
 };

@@ -43,6 +43,12 @@ export const productReducer: productReducerType = (state, action) => {
         allProducts: action.payload,
         isLoading: false,
       };
+    case "GET_PRODUCTS_PAGE":
+      return {
+        ...state,
+        allProductsPage: action.payload,
+        isLoading: false,
+      };
     case "GET_USER_PRODUCTS":
       return {
         ...state,

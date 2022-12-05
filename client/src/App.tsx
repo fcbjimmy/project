@@ -7,7 +7,7 @@ import {
   About,
   EditProduct,
 } from "./pages/index";
-import { CurrentUserProducts, Navbar, Modal } from "./components";
+import { CurrentUserProducts, Navbar, Modal, AllProducts } from "./components";
 import { Navigate, useLocation, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,7 +20,7 @@ function App() {
   const { modal } = useContext(modalContext);
 
   return (
-    <div className="bg-slate-100 w-full min-h-screen">
+    <div className="bg-zinc-100 w-screen min-h-screen">
       <ToastContainer />
       <Navbar />
       <Routes>
@@ -35,12 +35,13 @@ function App() {
           element={user ? <CreateProducts /> : <Navigate to="/" />}
         />
         <Route
-          path="/userProducts"
+          path="/usershops"
           element={user ? <CurrentUserProducts /> : <Navigate to="/" />}
         />
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/editproduct/:id" element={<EditProduct />} />
+        <Route path="/allshops" element={<AllProducts />} />
       </Routes>
       {modal && <Modal />}
     </div>

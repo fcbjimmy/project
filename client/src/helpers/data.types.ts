@@ -159,6 +159,7 @@ export type products = {
 
 export interface productStateTypes {
   allProducts: products[] | [];
+  allProductsPage: products[] | [];
   userProducts: products[] | [];
   isLoading: true | false;
   success: true | false;
@@ -193,6 +194,11 @@ export type getallpkts = {
   payload: products[] | [];
 };
 
+export type getallpktspage = {
+  type: "GET_PRODUCTS_PAGE";
+  payload: products[] | [];
+};
+
 export type setuploadingfalse = {
   type: "SETUP_PRODUCT_LOADING_FALSE";
 };
@@ -224,6 +230,7 @@ export type productReducerType = (
   action:
     | setupbegin
     | getallpkts
+    | getallpktspage
     | createuserpkts
     | setuploadingfalse
     | getuserpkts

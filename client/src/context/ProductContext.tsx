@@ -13,6 +13,7 @@ import {
   CreateProductInputs,
   setupbegin,
   getallpkts,
+  getallpktspage,
   createuserpkts,
   setuploadingfalse,
   getuserpkts,
@@ -36,6 +37,7 @@ interface Props {
 
 const initialState: productStateTypes = {
   allProducts: [],
+  allProductsPage: [],
   userProducts: [],
   isLoading: false,
   success: false,
@@ -46,6 +48,7 @@ export const productsContext = createContext<{
   dispatch: React.Dispatch<
     | setupbegin
     | getallpkts
+    | getallpktspage
     | createuserpkts
     | setuploadingfalse
     | getuserpkts
@@ -54,18 +57,22 @@ export const productsContext = createContext<{
     | deletepkt
   >;
   fetchAllProducts: () => void;
+  fetchAllProductsPage: (id: string) => void;
   fetchUserProducts: () => void;
   createProduct: (data: CreateProductInputs) => void;
   editProduct: (data: EditProductInputs, shopId: number) => void;
   deleteProduct: (shopId: number) => void;
+  deleteProductByAdmin: (shopId: number) => void;
 }>({
   state: initialState,
   dispatch: () => {},
   fetchAllProducts: () => {},
+  fetchAllProductsPage: () => {},
   fetchUserProducts: () => {},
   createProduct: () => {},
   editProduct: () => {},
   deleteProduct: () => {},
+  deleteProductByAdmin: () => {},
 });
 
 export const ProductContextProvider = ({ children }: Props) => {
@@ -104,9 +111,23 @@ export const ProductContextProvider = ({ children }: Props) => {
   const fetchAllProducts = async () => {
     try {
       dispatch({ type: "SETUP_PRODUCT_BEGIN" });
-      const { data } = await productFetch.get("auth/showAllProducts");
+      const { data } = await productFetch.get(`auth/showAllProducts?cat=0`);
       const { products }: { products: products[] | [] } = data;
+      console.log(products);
       dispatch({ type: "GET_PRODUCTS", payload: products });
+    } catch (error) {
+      dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
+      console.log(error);
+    }
+  };
+
+  const fetchAllProductsPage = async (id: string) => {
+    try {
+      dispatch({ type: "SETUP_PRODUCT_BEGIN" });
+      const { data } = await productFetch.get(`auth/showAllProducts?cat=${id}`);
+      const { products }: { products: products[] | [] } = data;
+      console.log(products);
+      dispatch({ type: "GET_PRODUCTS_PAGE", payload: products });
     } catch (error) {
       dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
       console.log(error);
@@ -229,6 +250,7 @@ export const ProductContextProvider = ({ children }: Props) => {
   const deleteProduct = async (shopId: number) => {
     try {
       dispatch({ type: "SETUP_PRODUCT_BEGIN" });
+      console.log(shopId);
       const {
         data: { msg },
       } = await productFetch.delete(`product/deleteProduct/${shopId}`);
@@ -242,6 +264,25 @@ export const ProductContextProvider = ({ children }: Props) => {
       }
     }
   };
+
+  const deleteProductByAdmin = async (shopId: number) => {
+    try {
+      dispatch({ type: "SETUP_PRODUCT_BEGIN" });
+      console.log(shopId);
+      const {
+        data: { msg },
+      } = await productFetch.delete(`product/deleteProductByAdmin/${shopId}`);
+      dispatch({ type: "DELETE_PRODUCT", payload: { shopId } });
+      toast.success(`${msg}`, { position: "top-center" });
+    } catch (error) {
+      dispatch({ type: "SETUP_PRODUCT_LOADING_FALSE" });
+      console.log(error);
+      if (error instanceof AxiosError) {
+        toast.error(`${error?.response?.data}`, { position: "top-center" });
+      }
+    }
+  };
+
   const contextValue = useMemo(
     () => ({
       state,
@@ -251,6 +292,8 @@ export const ProductContextProvider = ({ children }: Props) => {
       createProduct,
       editProduct,
       deleteProduct,
+      deleteProductByAdmin,
+      fetchAllProductsPage,
     }),
     [state, dispatch]
   );

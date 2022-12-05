@@ -60,12 +60,14 @@ const ProductCard = ({ productsProp }: Props) => {
             {item.userId === user?.id || user?.role === "admin" ? (
               <div className="flex justify-between">
                 <div className="flex ml-2">
-                  <img
-                    className="w-8 mx-1 hover:scale-110 active:translate-y-0.5 duration-75"
-                    src={edit}
-                    alt="edit"
-                    onClick={(): void => navigate(`/editproduct/${item.id}`)}
-                  />
+                  {item.userId === user?.id ? (
+                    <img
+                      className="w-8 mx-1 hover:scale-110 active:translate-y-0.5 duration-75"
+                      src={edit}
+                      alt="edit"
+                      onClick={(): void => navigate(`/editproduct/${item.id}`)}
+                    />
+                  ) : null}
                   <img
                     className="w-8 mx-1 hover:scale-110 active:translate-y-0.5 duration-75"
                     src={delet}

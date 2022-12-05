@@ -14,6 +14,8 @@ const useProductContext = () => {
     createProduct,
     editProduct,
     deleteProduct,
+    deleteProductByAdmin,
+    fetchAllProductsPage,
   } = contextProductValue;
 
   return {
@@ -24,6 +26,8 @@ const useProductContext = () => {
     fetchUserProducts,
     createProduct,
     editProduct,
+    deleteProductByAdmin,
+    fetchAllProductsPage,
   };
 };
 

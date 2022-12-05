@@ -14,6 +14,7 @@ type Props = {};
 
 const ProductPage = (props: Props) => {
   const { allProducts, fetchAllProducts } = useProductContext();
+
   useEffect(() => {
     fetchAllProducts();
   }, []);

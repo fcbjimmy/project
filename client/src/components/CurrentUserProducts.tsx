@@ -19,8 +19,8 @@ const CurrentUserProducts = () => {
         <div>Loading...</div>
       ) : (
         <div className="flex flex-col mt-10 max-w-[375px] md:max-w-2xl lg:max-w-4xl mx-auto">
-          <div className="flex justify-between">
-            <div className="text-2xl font-bold underline">User Shops</div>
+          <div className="flex justify-between border-b-2 border-black">
+            <div className="text-2xl font-bold ">User Shops</div>
             <div>
               <Link to={"/create"}>
                 <img
@@ -39,7 +39,7 @@ const CurrentUserProducts = () => {
           {userProducts.length < 1 ? (
             <div className="text-xl mt-8">No Shops</div>
           ) : (
-            <div className="self-center lg:grid lg:grid-cols-3 gap-x-20">
+            <div className="self-center md:grid md:grid-cols-2 lg:grid-cols-3 gap-x-20">
               <ProductCard productsProp={userProducts} />
             </div>
           )}

@@ -34,9 +34,11 @@ const Navbar = (props: Props) => {
               <Link to={"/about"}>
                 <li className="p-4">About</li>
               </Link>
-              <li className="p-4">Shops</li>
+              <Link to={"/allshops"}>
+                <li className="p-4">Shops</li>
+              </Link>
               {user && (
-                <Link to={"/userProducts"}>
+                <Link to={"/usershops"}>
                   <li className="p-4">My Shops</li>
                 </Link>
               )}
@@ -82,9 +84,11 @@ const Navbar = (props: Props) => {
               <span className="">About</span>
             </li>
           </Link>
-          <li className="menu-li">Shops</li>
+          <Link to={"/allshops"} onClick={() => setNav(!nav)}>
+            <li className="menu-li">Shops</li>
+          </Link>
           {user && (
-            <Link to={"/userProducts"} onClick={() => setNav(!nav)}>
+            <Link to={"/usershops"} onClick={() => setNav(!nav)}>
               <li className="menu-li">My Shops</li>
             </Link>
           )}
