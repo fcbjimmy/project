@@ -60,10 +60,13 @@ const Navbar = (props: Props) => {
               </button>
             </div>
           ) : (
-            <div className="hidden md:flex pr-4">
-              <button className="p-2" onClick={logout}>
-                Logout
-              </button>
+            <div className="hidden md:flex items-center gap-5">
+              <span className="text-forest font-bold">Hello {user.name}</span>
+              <div className="hidden md:flex pr-4">
+                <button className="p-2" onClick={logout}>
+                  Logout
+                </button>
+              </div>
             </div>
           )}
           <div className="pr-4 text-2xl md:hidden" onClick={handleClick}>
@@ -127,7 +130,7 @@ const Navbar = (props: Props) => {
           )}
         </ul>
       </nav>
-      <div className="w-screen h-[80px]"></div>
+      <div className="w-screen h-[80px] bg-green-50"></div>
     </>
   );
 };

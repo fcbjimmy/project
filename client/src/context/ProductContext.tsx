@@ -181,6 +181,9 @@ export const ProductContextProvider = ({ children }: Props) => {
           facebook,
         }
       );
+      if (state.isLoading) {
+        toast.success("Creating..", { position: "top-center" });
+      }
       const { product: productCreated, msg } = productData;
 
       dispatch({ type: "CREATE_PRODUCTS", payload: productCreated });

@@ -39,3 +39,7 @@
 .span-button {
   @apply border-2 cursor-pointer border-emerald-500 bg-emerald-500 rounded p-0.5;
 }
+
+.hero-join-button {
+  @apply border border-forest bg-forest rounded-md p-1 text-center text-white text-lg mt-8 w-32 hover:cursor-pointer;
+}

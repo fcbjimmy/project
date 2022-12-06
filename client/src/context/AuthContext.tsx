@@ -1,4 +1,10 @@
-import { createContext, useReducer, ReactNode, useMemo } from "react";
+import {
+  createContext,
+  useReducer,
+  ReactNode,
+  useMemo,
+  useEffect,
+} from "react";
 import { toast } from "react-toastify";
 import axios, { AxiosError } from "axios";
 import {
@@ -50,6 +56,7 @@ export const AuthContextProvider = ({ children }: Props) => {
   // interface CommonHeaderProperties extends HeadersDefaults {
   //   Authorization: string;
   // }
+  useEffect(() => {}, []);
 
   const authFetch = axios.create({
     baseURL: "/api/v1",
@@ -117,7 +124,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         },
       });
       setUserToLocalStorage({ token, user });
-      toast.success("Logged in", { position: "top-center" });
+      toast.success("Signed in", { position: "top-center" });
     } catch (error) {
       console.log(error);
       if (error instanceof AxiosError) {
@@ -156,6 +163,7 @@ export const AuthContextProvider = ({ children }: Props) => {
       type: "LOGOUT",
     });
     removeUserFromLocalStorage();
+    toast.success("Logged out 👋", { position: "top-center" });
   };
 
   const contextValue = useMemo(

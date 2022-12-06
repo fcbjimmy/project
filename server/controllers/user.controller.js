@@ -17,6 +17,7 @@ const bcrypt = require("bcryptjs");
 
 const signup = async (req, res) => {
   const { name, email, password } = req.body;
+  const capitalizedName = name.charAt(0).toUpperCase() + name.slice(1);
 
   const validEmail = await User.findOne({ where: { email } });
   if (validEmail) {
@@ -25,7 +26,11 @@ const signup = async (req, res) => {
 
   const salt = await bcrypt.genSalt(10);
 
-  let data = { name, email, password: await bcrypt.hash(password, salt) };
+  let data = {
+    name: capitalizedName,
+    email,
+    password: await bcrypt.hash(password, salt),
+  };
 
   const count = await User.count();
   if (count === 0) {
@@ -98,7 +103,7 @@ const showAllProducts = async (req, res) => {
   // ) {
   //   products = await Product.findAll({ where: { type: types[cat] } });
   // }
-  const products = await Product.findAll();
+  const products = await Product.findAll({ order: [["id", "DESC"]] });
   res.status(StatusCodes.OK).json({ products });
 };
 

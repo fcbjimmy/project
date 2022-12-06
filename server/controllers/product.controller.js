@@ -73,6 +73,7 @@ const createProduct = async (req, res) => {
 const getAllProductsFromUser = async (req, res) => {
   const products = await Product.findAll({
     where: { userId: req.user.userId },
+    order: [["id", "DESC"]],
   });
   res.status(StatusCodes.ACCEPTED).json(products);
 };

@@ -1,10 +1,12 @@
 import * as yup from "yup";
 
+const capital = /^[A-Z]+[a-zA-Z]*$/;
 export const schema = yup.object().shape({
   name: yup
     .string()
     .min(4, "Name must be at least 4 characters long")
     .max(32)
+    .matches(capital, "First letter of name must be capitalize")
     .required(),
   email: yup
     .string()

@@ -6,15 +6,7 @@ import { CreateProductInputs } from "../helpers/data.types";
 import useProductContext from "../hooks/useProductContext";
 import { locations, types } from "../helpers/options";
 import { SampleProduct } from "../components";
-
-// interface fileImage {
-//   lastModified: number;
-//   lastModifiedDate?: {};
-//   name: string;
-//   size: number;
-//   type: string;
-//   webkitRelativePath: string;
-// }
+import { motion } from "framer-motion";
 
 const CreateProducts = () => {
   const { createProduct, userProducts } = useProductContext();
@@ -134,7 +126,12 @@ const CreateProducts = () => {
   // };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+    >
       <section className="border-2">
         <div className="flex flex-col items-center md:flex-row md:justify-evenly border max-w-full">
           <div className="m-10 bg-white rounded-md drop-shadow-md w-[375px] md:w-[450px]">
@@ -340,7 +337,7 @@ const CreateProducts = () => {
           </div>
         </div>
       </section>
-    </>
+    </motion.div>
   );
 };
 

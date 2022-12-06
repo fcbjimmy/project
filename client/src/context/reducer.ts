@@ -56,13 +56,11 @@ export const productReducer: productReducerType = (state, action) => {
         isLoading: false,
       };
     case "CREATE_PRODUCTS":
-      console.log("Reducer page");
-      console.log(action.payload);
       return {
         ...state,
         isLoading: false,
-        userProducts: [...state.userProducts, action.payload],
-        allProducts: [...state.allProducts, action.payload],
+        userProducts: [action.payload, ...state.userProducts],
+        allProducts: [action.payload, ...state.allProducts],
       };
     case "EDIT_PRODUCT_BEGIN":
       return { ...state, isLoading: true, success: false };
