@@ -162,6 +162,7 @@ export const ProductContextProvider = ({ children }: Props) => {
         instagram,
         facebook,
       } = data;
+      toast.info("Updating", { position: "top-center" });
       const {
         data: productData,
       }: { data: { product: products; msg: string } } = await productFetch.post(
@@ -182,7 +183,7 @@ export const ProductContextProvider = ({ children }: Props) => {
         }
       );
       if (state.isLoading) {
-        toast.success("Creating..", { position: "top-center" });
+        toast.success("Creating, please wait 😉", { position: "top-center" });
       }
       const { product: productCreated, msg } = productData;
 
@@ -216,7 +217,7 @@ export const ProductContextProvider = ({ children }: Props) => {
         instagram,
         facebook,
       } = data;
-
+      toast.info("Updating, please wait 😉", { position: "top-center" });
       const {
         data: productData,
       }: { data: { product: products; msg: string } } =

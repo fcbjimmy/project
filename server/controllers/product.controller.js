@@ -153,10 +153,13 @@ const updateProduct = async (req, res) => {
     typeof sampleImageOne === "string" &&
     !sampleImageOne.startsWith("http")
   ) {
-    const resultSampleImageOne = await cloudinary.uploader.upload(logo, {
-      use_filename: true,
-      folder: "file-upload-zero",
-    });
+    const resultSampleImageOne = await cloudinary.uploader.upload(
+      sampleImageOne,
+      {
+        use_filename: true,
+        folder: "file-upload-zero",
+      }
+    );
     product.sampleImageOne = resultSampleImageOne?.secure_url;
   }
 
@@ -164,10 +167,13 @@ const updateProduct = async (req, res) => {
     typeof sampleImageTwo === "string" &&
     !sampleImageTwo.startsWith("http")
   ) {
-    const resultSampleImageTwo = await cloudinary.uploader.upload(logo, {
-      use_filename: true,
-      folder: "file-upload-zero",
-    });
+    const resultSampleImageTwo = await cloudinary.uploader.upload(
+      sampleImageTwo,
+      {
+        use_filename: true,
+        folder: "file-upload-zero",
+      }
+    );
     product.sampleImageTwo = resultSampleImageTwo?.secure_url;
   }
 

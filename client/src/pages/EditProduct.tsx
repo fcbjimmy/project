@@ -82,6 +82,7 @@ const EditProduct = (props: Props) => {
     if (e.target.files !== null) {
       file = e.target.files[0];
     }
+    // console.log(file, "handleSampleImageOne");
     setFileToBase64ImageOne(file);
   };
 
@@ -90,6 +91,7 @@ const EditProduct = (props: Props) => {
     if (e.target.files !== null) {
       file = e.target.files[0];
     }
+    // console.log(file, "handleSampleImageTwo");
     setFileToBase64ImageTwo(file);
   };
 
@@ -157,7 +159,6 @@ const EditProduct = (props: Props) => {
       sampleImageTwo,
     };
     editProduct(formData, shopId);
-    // navigate("/userProducts");
   };
 
   return (

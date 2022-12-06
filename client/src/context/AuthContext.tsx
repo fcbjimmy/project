@@ -13,19 +13,12 @@ import {
   stateTypes,
   appAction,
   setLocaleStorage,
-  userTypes,
 } from "../helpers/data.types";
 import { authReducer } from "./reducer";
 
 interface Props {
   children: ReactNode;
 }
-
-// interface AppContext {
-//   // signup: (data: SignupFormInputs) => Promise<void>;
-//   login: (data: LoginFormInputs) => Promise<void>;
-//   signup: (data: SignupFormInputs) => Promise<void>;
-// }
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
@@ -53,18 +46,11 @@ export const AuthContext = createContext<{
 export const AuthContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  // interface CommonHeaderProperties extends HeadersDefaults {
-  //   Authorization: string;
-  // }
   useEffect(() => {}, []);
 
   const authFetch = axios.create({
     baseURL: "/api/v1",
   });
-
-  // authFetch.defaults.headers = {
-  //   Authorization: `Bearer authToken`,
-  // } as CommonHeaderProperties;
 
   authFetch.interceptors.request.use(
     (config) => {
