@@ -28,5 +28,10 @@ edit product
 main ✅
 login ✅
 signup ✅
-create pkts
-edit pkts
+create pkts ✅
+edit pkts ✅
+
+Change readme on github
+position the loading message ✅
+change the title of the logo in edit to front page✅
+change the icon and title of the page with helmet

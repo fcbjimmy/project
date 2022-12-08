@@ -318,7 +318,7 @@ const EditProduct = (props: Props) => {
                 <li className="form-li-create">
                   <div>
                     <label htmlFor="fileUploadLogo">
-                      Select Image for Logo{" "}
+                      Select Image for front page
                       <span className="text-xs">
                         (images to be less than 100kb)
                       </span>
@@ -334,7 +334,7 @@ const EditProduct = (props: Props) => {
                 <li className="form-li-create">
                   <div>
                     <label htmlFor="fileupload">
-                      Select Image for Cover
+                      Select Image for card logo
                       <span className="text-xs">
                         (images to be less than 100kb)
                       </span>

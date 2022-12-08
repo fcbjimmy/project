@@ -15,17 +15,23 @@ import "react-toastify/dist/ReactToastify.css";
 import useAuthContext from "./hooks/useAuthContext";
 import { modalContext } from "./context/ModalContext";
 import { useContext } from "react";
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 function App() {
   const { user } = useAuthContext();
   const { modal } = useContext(modalContext);
 
   return (
-    <div className="bg-zinc-100 w-screen min-h-screen">
-      <ToastContainer />
-      <Navbar />
-      <AnimatedRoutes />
-      {/* <Routes>
+    <HelmetProvider>
+      <Helmet>
+        <title>SBHK</title>
+        <link rel="canonical" href="https://www.tacobell.com/" />
+      </Helmet>
+      <div className="bg-zinc-100 w-screen min-h-screen">
+        <ToastContainer />
+        <Navbar />
+        <AnimatedRoutes />
+        {/* <Routes>
         <Route path="/" element={<Main />} />
         <Route
           path="/signup"
@@ -45,9 +51,10 @@ function App() {
         <Route path="/editproduct/:id" element={<EditProduct />} />
         <Route path="/allshops" element={<AllProducts />} />
       </Routes> */}
-      <Footer />
-      {modal && <Modal />}
-    </div>
+        <Footer />
+        {modal && <Modal />}
+      </div>
+    </HelmetProvider>
   );
 }
 

@@ -45,7 +45,9 @@ const AllProducts = () => {
   return (
     <section className="w-full min-h-screen">
       {isLoading ? (
-        <div>Loading</div>
+        <div className="w-screen flex justify-center items-center h-screen">
+          Loading... 🧘
+        </div>
       ) : (
         <div className="flex flex-col mt-10 max-w-[375px] mx-auto md:max-w-2xl lg:max-w-4xl xl:max-w-6xl">
           <div className="border-b-2 border-black">
